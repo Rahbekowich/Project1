@@ -17,6 +17,14 @@ std::map<std::string, MonsterData> MONSTER_DATA = {
     {"demon Lord",  {"Demon Lord", 100, 30, 12}}
 };
 
+Monster::Monster()
+{
+    name = "";
+    hp = 0;
+    attack = 0;
+    idNumber = 0;
+}
+
 Monster::Monster(std::string type) {
     MonsterData data = MONSTER_DATA[type];
     name   = data.name;

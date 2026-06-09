@@ -19,8 +19,8 @@ public:
     int attack;
     int idNumber;
 
+    Monster();
     Monster(std::string type);
+
     void print();
-
-
 };
