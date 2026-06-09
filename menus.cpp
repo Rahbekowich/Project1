@@ -25,5 +25,5 @@ void Menu::characterChoice(){
 }
 
 void Menu::inGameMenu() {
-
+    
 }
