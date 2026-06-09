@@ -11,7 +11,7 @@ public:
     Monster monster;
 
     int activeMonster = 0;
-    
+
     void switchMonster();
     void startBattle(Monster monster);
     void whoStarts();
@@ -19,4 +19,6 @@ public:
     void monsterTurn();
     void playerAttack(Monster monster);
     int battleOutcome();
+    void playerAttack();
+    
 };                             

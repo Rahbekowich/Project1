@@ -24,6 +24,8 @@ void Battle::whoStarts() {
 void Battle::playerTurn() {
     int playerAction = 0;
     std::cout << "Choose your action by entering the according number in your console" << std::endl;
+    std::cout << "Your active monster is: " << playerMonster[activeMonster].name << " - HP: " << playerMonster[activeMonster].hp << " - ATK: " << playerMonster[activeMonster].attack << std::endl;
+    std::cout << "The enemy " << monster.name << " has " << monster.hp << " HP and " << monster.attack << " ATK" << std::endl;
     std::cout << "1. Attack" << std::endl;
     std::cout << "2. Use an item" << std::endl;
     std::cout << "3. Change monster" << std::endl;
@@ -44,7 +46,7 @@ void Battle::playerTurn() {
     }
     if (playerAction == 4){
         std::cout << "You run away from the " << monster.name << "!" << std::endl;
-        mainMenu();
+        menu::mainMenu();
     }
 
     if (playerAction != 1 && playerAction != 2 && playerAction != 3 && playerAction != 4){
@@ -91,8 +93,7 @@ void Battle::playerAttack(Monster monster) {
 
     std::cout << "You dealt " << damage << " damage to the " << monster.name << "!" << std::endl;
     this-> monster.hp -= damage;
-    std::cout << "The " << monster.name << " has " << monster.hp << " HP left!" << std::endl;
-
+    std::cout << "The " << this->monster.name << " has " << this->monster.hp << " HP left!" << std::endl;
 };
 
 void Battle::switchMonster() {
@@ -111,6 +112,7 @@ void Battle::switchMonster() {
 }
 
 
+
 int Battle::battleOutcome() {
     bool allDead = true;
     for (int i = 0; i < 4; i++) {
@@ -122,11 +124,42 @@ int Battle::battleOutcome() {
 
     if (allDead) {
         std::cout << "Your entire party was defeated!" << std::endl;
-        return 0; // spiller tabte
+        std::cout << "You heal your party but the " << monster.name << " gets away!" << std::endl;
+        menu::inGameMenu(); // spiller tabte
 
     } 
     else if (monster.hp <= 0) {
         std::cout << "You defeated the " << monster.name << "!" << std::endl;
+        std::cout << "Do you want to catch the " << monster.name << "? (y/n)" << std::endl;
+        char catchChoice;
+        std::cin >> catchChoice;
+        if (catchChoice == 'y' || catchChoice == 'Y' && emptySlotCount > 0) {
+            std::cout << "You caught the " << monster.name << "!" << std::endl;
+            for (int i = 0; i < 4; i++) {
+                if (playerMonster[i].name == "") {
+                    playerMonster[i] = monster; 
+                    break;
+                }
+            }
+        }   
+        else if (catchChoice == 'y' || catchChoice == 'Y' && emptySlotCount == 0) {
+            std::cout << "You don't have any empty slots to catch the " << monster.name << "!" << std::endl;
+            std::cout << "which monster do you want to switch out?" << std::endl;
+            std::cout << "1. " << playerMonster[0].name << std::endl;
+            std::cout << "2. " << playerMonster[1].name << std::endl;
+            std::cout << "3. " << playerMonster[2].name << std::endl;
+            std::cout << "4. " << playerMonster[3].name << std::endl;
+            int switchChoice;
+            std::cin >> switchChoice;
+            playerMonster[switchChoice - 1] = monster;
+            menu::inGameMenu();
+
+        }
+        if (catchChoice == 'n' || catchChoice == 'N') {
+            std::cout << "You chose not to catch the " << monster.name << " and it runs away" << std::endl;
+            menu::inGameMenu();
+        }
+
         return 1; // spiller vandt
 
     } 
@@ -135,5 +168,5 @@ int Battle::battleOutcome() {
         switchMonster();
         return -1; // kamp fortsætter
     }
-}
+};
 

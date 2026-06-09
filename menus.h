@@ -2,6 +2,8 @@
 
 class Menu {
 public:
+    int emptySlotCount = 0;
+
     void mainMenu();
     void characterChoice();
     void inGameMenu();
@@ -10,3 +12,4 @@ public:
     void viewFighters();
     void viewInventory();
 };  
+

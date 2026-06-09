@@ -145,25 +145,30 @@ void Menu::viewFighters() {
     int choiceViewFighters = 0;
     std::cin >> choiceViewFighters;
 
+
     for (int i = 0; i < 4; i++){
         if (i == 0){
             if (playerMonster[0].name == ""){
                 std::cout << "empty slot" << std::endl;
+                emptySlotCount++;
             }
         }
         if (i == 1){
             if (playerMonster[1].name == ""){
                 std::cout << "empty slot" << std::endl;
+                emptySlotCount++;
             }
         }
         if (i == 2){
             if (playerMonster[2].name == ""){
                 std::cout << "empty slot" << std::endl;
+                emptySlotCount++;
             }
         }
         if (i == 3){
             if (playerMonster[3].name == ""){
                 std::cout << "empty slot" << std::endl;
+                emptySlotCount++;
             }
         }
     }
@@ -175,6 +180,14 @@ void Menu::viewFighters() {
 
 
 void Menu::viewInventory() {
-    // Here you would implement the view your inventory functionality
+    std::cout << "here is your inventory!" << std::endl;
+    std::cout << "This feature is not implemented yet." << std::endl;
+    std::cout << "enter 1 to go back to the in game menu" << std::endl;
+    int choiceViewInventory = 0;
+    std::cin >> choiceViewInventory;
+
+    if (choiceViewInventory == 1){
+        inGameMenu();
+    }
 };
 
