@@ -127,7 +127,13 @@ void Menu::fightMonster() {
 
 
 void Menu::viewFighters() {
+    int slot1 = 0;
+    int slot2 = 0;
+    int slot3 = 0;
+    int slot4 = 0;
     std::cout << "here are your fighters!" << std::endl;
+    
+    
 
 };
 

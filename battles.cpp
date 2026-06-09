@@ -61,12 +61,40 @@ void monsterTurn() {
     
 };
 
+
 void Battle::startBattle(Monster monster) {
     std::cout << "A wild " << monster.name << " appears!" << std::endl;
     monster.print();
     whoStarts();
+    std::cout << "You got the jump on the " << monster.name << ", and you attack first!" << std::endl;
     if (attackOrder == 1){
+        playerTurn();
+    }
+    std::cout << "The " << monster.name << " got the jump on you, and attacks first!" << std::endl;
+    else if (attackOrder == 2){
+        monsterTurn();
     }
     // Here you would implement the battle logic, such as player and monster taking turns attacking each other until one of them is defeated
 };
 
+void Battle::playerAttack(Monster monster) {
+    int damage = playerMonster.attack;
+
+
+    std::cout << "You dealt " << damage << " damage to the " << monster.name << "!" << std::endl;
+        // Here you would implement the logic to reduce the monster's HP by the damage dealt by the player
+    
+
+};
+
+int battleOutcome() {
+    if (playerMonster.hp <= 0) {
+        std::cout << "Your " << playerMonster.name << " was defeated by the " << monster.name << "!" << std::endl;
+
+    }
+
+    else if (monster.hp <= 0) {
+        std::cout << "You defeated the " << monster.name << "!" << std::endl;
+        // Here you would implement the logic for when the monster is defeated, such as rewarding the player with experience points or items
+    }
+};

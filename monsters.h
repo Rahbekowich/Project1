@@ -6,6 +6,7 @@ struct MonsterData {
     std::string name;
     int hp;
     int attack;
+    int idNumber; // You can use this to assign a unique ID to each monster if needed
 };
 
 
@@ -20,5 +21,5 @@ public:
     Monster(std::string type);
     void print();
 
-    
+
 };
