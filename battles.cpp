@@ -31,7 +31,6 @@ void Battle::playerTurn() {
 
     if (playerAction == 1){
         std::cout << "You attack the " << monster.name << "!" << std::endl;
-        int Playerdamage = playerMonster.attack;
         playerAttack(monster);
     }
     if (playerAction == 2){
@@ -55,8 +54,8 @@ void Battle::monsterTurn() {
         std::cout << "The " << monster.name << "'s attack missed!" << std::endl;
     } 
     else {
-        
-        // Here you would implement the logic to reduce the player's HP by the damage dealt by the monster
+        playerMonster.hp -= damage;
+        std::cout << "The " << monster.name << " dealt " << damage << " damage to you!" << std::endl;
     }
     
 };
@@ -87,14 +86,46 @@ void Battle::playerAttack(Monster monster) {
 
 };
 
-int Battle::battleOutcome() {
-    if (playerMonster.hp <= 0) {
-        std::cout << "Your " << playerMonster.name << " was defeated by the " << monster.name << "!" << std::endl;
+void Battle::switchMonster() {
+    std::cout << "Your " << playerMonster[activeMonster].name << " was defeated!" << std::endl;
+    std::cout << "Choose your next monster:" << std::endl;
 
+    for (int i = 0; i < 4; i++) {
+        if (playerMonster[i].hp > 0) {
+            std::cout << i + 1 << ". " << playerMonster[i].name << std::endl;
+        }
     }
 
+    int choice;
+    std::cin >> choice;
+    activeMonster = choice - 1;  // sæt det aktive monster
+}
+
+
+int Battle::battleOutcome() {
+    // Tjek om ALLE spillerens monstre er døde
+    bool allDead = true;
+    for (int i = 0; i < 4; i++) {
+        if (playerMonster[i].hp > 0) {
+            allDead = false;
+            break;
+        }
+    }
+
+    if (allDead) {
+        std::cout << "Your entire party was defeated!" << std::endl;
+        return 0; // spiller tabte
+
+    } 
     else if (monster.hp <= 0) {
         std::cout << "You defeated the " << monster.name << "!" << std::endl;
-        // Here you would implement the logic for when the monster is defeated, such as rewarding the player with experience points or items
+        return 1; // spiller vandt
+
+    } 
+    else {
+        // Det aktive monster er dødt, men der er andre tilbage
+        switchMonster();
+        return -1; // kamp fortsætter
     }
-};
+}
+

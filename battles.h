@@ -7,8 +7,7 @@
 class Battle {
 public:
     int attackOrder = 0;       
-    Monster playerMonster;     
-    Monster monster;           
+    Monster playerMonster[4];
 
     void startBattle(Monster monster);
     void whoStarts();

@@ -1,5 +1,6 @@
 #include "menus.h"
 #include "monsters.h"
+#include "battles.h"
 
 #include <iostream>
 
@@ -16,8 +17,15 @@ void Menu::mainMenu() {
     std::cin >> choiceMainMenu;
 
     if (choiceMainMenu == 1){
-        characterChoice
-    };
+        characterChoice();
+    }
+    else if (choiceMainMenu == 2){
+        std::cout << "Thanks for playing! Goodbye!" << std::endl;
+        exit(0);
+    }
+    else {
+        std::cout << "Invalid choice. Please choose either 1 or 2." << std::endl;
+    }
 };
 
 void Menu::characterChoice(){
@@ -127,15 +135,44 @@ void Menu::fightMonster() {
 
 
 void Menu::viewFighters() {
-    int slot1 = 0;
-    int slot2 = 0;
-    int slot3 = 0;
-    int slot4 = 0;
     std::cout << "here are your fighters!" << std::endl;
-    
+    std::cout << playerMonster[0].name << " - HP: " << playerMonster[0].hp << " - ATK: " << playerMonster[0].attack << std::endl;
+    std::cout << playerMonster[1].name << " - HP: " << playerMonster[1].hp << " - ATK: " << playerMonster[1].attack << std::endl;
+    std::cout << playerMonster[2].name << " - HP: " << playerMonster[2] .hp << " - ATK: " << playerMonster[2].attack << std::endl;
+    std::cout << playerMonster[3].name << " - HP: " << playerMonster[3] .hp << " - ATK: " << playerMonster[3].attack << std::endl;
+    std::endl;
+    std::cout << "enter 1 to go back to the in game menu" << std::endl;
+    int choiceViewFighters = 0;
+    std::cin >> choiceViewFighters;
 
+    for (int i = 0; i < 4; i++){
+        if (i == 0){
+            if (playerMonster[0].name == ""){
+                std::cout << "empty slot" << std::endl;
+            }
+        }
+        if (i == 1){
+            if (playerMonster[1].name == ""){
+                std::cout << "empty slot" << std::endl;
+            }
+        }
+        if (i == 2){
+            if (playerMonster[2].name == ""){
+                std::cout << "empty slot" << std::endl;
+            }
+        }
+        if (i == 3){
+            if (playerMonster[3].name == ""){
+                std::cout << "empty slot" << std::endl;
+            }
+        }
+    }
 
+    if (choiceViewFighters == 1){
+        inGameMenu();
+    }
 };
+
 
 void Menu::viewInventory() {
     // Here you would implement the view your inventory functionality

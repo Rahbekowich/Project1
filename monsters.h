@@ -17,6 +17,7 @@ public:
     std::string name;
     int hp;
     int attack;
+    int idNumber;
 
     Monster(std::string type);
     void print();
