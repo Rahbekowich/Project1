@@ -11,7 +11,7 @@ void Menu::mainMenu() {
     std::cout << "Welcome to the Main Menu!" << std::endl;
     std::cout << "Choose your action by entering the according number in your console" << std::endl;
     std::cout << "1. Start new game" << std::endl;
-    std::cout << "2. quit"
+    std::cout << "2. quit" << std::endl;
     
     std::cin >> choiceMainMenu;
 
@@ -43,7 +43,7 @@ void Menu::characterChoice(){
     
 };
 
-void starterPokemonChoice() {
+void Menu::starterPokemonChoice() {
     int choiceStarterPokemon = 0;
 
     std::cout << "Now choose your starting fighter!" << std::endl;
@@ -133,7 +133,7 @@ void Menu::viewFighters() {
     int slot4 = 0;
     std::cout << "here are your fighters!" << std::endl;
     
-    
+
 
 };
 

@@ -5,15 +5,15 @@
 #include <iostream>
 
 void Battle::whoStarts() {
-    int attackOrder = 0;
+
     int coinFlip = rand() % 2;
     if (coinFlip == 0){
         std::cout << "You start the battle!" << std::endl;
-        int attackorder = 1;
+        int attackOrder = 1;
     }
     if (coinFlip == 1){
         std::cout << "The " << monster.name << " starts the battle!" << std::endl;
-        int attackorder = 2;
+        int attackOrder = 2;
     }
 }
 
@@ -47,7 +47,7 @@ void Battle::playerTurn() {
 
 
 
-void monsterTurn() {
+void Battle::monsterTurn() {
     std::cout << "The " << monster.name << " attacks you!" << std::endl;
     int damage = monster.attack;
     int attackMissed = rand() % 10 < 2; // 20% chance to miss
@@ -66,12 +66,12 @@ void Battle::startBattle(Monster monster) {
     std::cout << "A wild " << monster.name << " appears!" << std::endl;
     monster.print();
     whoStarts();
-    std::cout << "You got the jump on the " << monster.name << ", and you attack first!" << std::endl;
     if (attackOrder == 1){
+        std::cout << "You got the jump on the " << monster.name << ", and you attack first!" << std::endl;
         playerTurn();
     }
-    std::cout << "The " << monster.name << " got the jump on you, and attacks first!" << std::endl;
     else if (attackOrder == 2){
+        std::cout << "The " << monster.name << " got the jump on you, and attacks first!" << std::endl;
         monsterTurn();
     }
     // Here you would implement the battle logic, such as player and monster taking turns attacking each other until one of them is defeated
@@ -87,7 +87,7 @@ void Battle::playerAttack(Monster monster) {
 
 };
 
-int battleOutcome() {
+int Battle::battleOutcome() {
     if (playerMonster.hp <= 0) {
         std::cout << "Your " << playerMonster.name << " was defeated by the " << monster.name << "!" << std::endl;
 

@@ -9,5 +9,4 @@ public:
     void fightMonster();
     void viewFighters();
     void viewInventory();
-    void fightmonster();
 };  
