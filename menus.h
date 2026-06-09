@@ -3,6 +3,6 @@
 class Menu {
 public:
     void mainMenu();
-    void introMenu();
+    void characterChoice();
 
 };  
