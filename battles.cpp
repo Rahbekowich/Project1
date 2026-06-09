@@ -7,13 +7,14 @@
 void Battle::whoStarts() {
 
     int coinFlip = rand() % 2;
+
     if (coinFlip == 0){
         std::cout << "You start the battle!" << std::endl;
-        int attackOrder = 1;
+        attackOrder = 1;
     }
-    if (coinFlip == 1){
+    else{
         std::cout << "The " << monster.name << " starts the battle!" << std::endl;
-        int attackOrder = 2;
+        attackOrder = 2;
     }
 }
 
@@ -34,13 +35,20 @@ void Battle::playerTurn() {
         playerAttack(monster);
     }
     if (playerAction == 2){
-        // Here you would implement the use an item functionality
+        std::cout << "this feature is not implemented yet. Please choose another action." << std::endl;
+        playerTurn();
     }
     if (playerAction == 3){
-        // Here you would implement the run away functionality
+        std::cout << "this feature is not implemented yet. Please choose another action." << std::endl;
+        playerTurn();
     }
-    if (playerAction != 1 && playerAction != 2 && playerAction != 3){
-        std::cout << "Invalid choice. Please choose either 1, 2 or 3." << std::endl;
+    if (playerAction == 4){
+        std::cout << "You run away from the " << monster.name << "!" << std::endl;
+        mainMenu();
+    }
+
+    if (playerAction != 1 && playerAction != 2 && playerAction != 3 && playerAction != 4){
+        std::cout << "Invalid choice. Please choose either 1, 2, 3 or 4." << std::endl;
     }
 }
 
@@ -54,7 +62,7 @@ void Battle::monsterTurn() {
         std::cout << "The " << monster.name << "'s attack missed!" << std::endl;
     } 
     else {
-        playerMonster.hp -= damage;
+        playerMonster[activeMonster].hp -= damage;
         std::cout << "The " << monster.name << " dealt " << damage << " damage to you!" << std::endl;
     }
     
@@ -62,6 +70,7 @@ void Battle::monsterTurn() {
 
 
 void Battle::startBattle(Monster monster) {
+    this -> monster = monster;
     std::cout << "A wild " << monster.name << " appears!" << std::endl;
     monster.print();
     whoStarts();
@@ -77,12 +86,12 @@ void Battle::startBattle(Monster monster) {
 };
 
 void Battle::playerAttack(Monster monster) {
-    int damage = playerMonster.attack;
+    int damage = playerMonster[activeMonster].attack;
 
 
     std::cout << "You dealt " << damage << " damage to the " << monster.name << "!" << std::endl;
-        // Here you would implement the logic to reduce the monster's HP by the damage dealt by the player
-    
+    this-> monster.hp -= damage;
+    std::cout << "The " << monster.name << " has " << monster.hp << " HP left!" << std::endl;
 
 };
 
@@ -103,7 +112,6 @@ void Battle::switchMonster() {
 
 
 int Battle::battleOutcome() {
-    // Tjek om ALLE spillerens monstre er døde
     bool allDead = true;
     for (int i = 0; i < 4; i++) {
         if (playerMonster[i].hp > 0) {

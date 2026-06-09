@@ -7,14 +7,14 @@ std::map<std::string, MonsterData> MONSTER_DATA = {
     {"goblin",      {"Goblin", 10, 3, 2}},
     {"skeleton",    {"Skeleton", 12, 4, 3}},
     {"horse",       {"Horse",  15, 5, 4}},
-    {"Mantis",      {"Mantis", 12, 7, 5}},
+    {"mantis",      {"Mantis", 12, 7, 5}},
     {"zombie",      {"Zombie",   18, 4, 6}},
     {"orc",         {"Orc",    20, 7, 7}},
     {"knight",      {"Knight",   25, 10, 8}},
     {"giant",       {"Giant",    30, 12, 9}},
     {"dragon",      {"Dragon", 40, 15, 10}},
     {"demon",       {"Demon", 50, 20, 11}},
-    {"Demon Lord",  {"Demon Lord", 100, 30, 12}}
+    {"demon Lord",  {"Demon Lord", 100, 30, 12}}
 };
 
 Monster::Monster(std::string type) {

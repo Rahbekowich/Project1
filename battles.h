@@ -8,7 +8,11 @@ class Battle {
 public:
     int attackOrder = 0;       
     Monster playerMonster[4];
+    Monster monster;
 
+    int activeMonster = 0;
+    
+    void switchMonster();
     void startBattle(Monster monster);
     void whoStarts();
     void playerTurn();
