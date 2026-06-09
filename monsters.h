@@ -19,4 +19,6 @@ public:
 
     Monster(std::string type);
     void print();
+
+    
 };
