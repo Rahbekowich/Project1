@@ -1,12 +1,11 @@
-
 #pragma once
 
-#include "monsters.h"
+#include "player.h"
 
-class Menu
-{
-public:
+class Menu {
+    public:
     Player player;
+
     void mainMenu();
     void characterChoice();
     void starterPokemonChoice();
@@ -16,5 +15,6 @@ public:
 
     void viewFighters();
     void viewInventory();
+
 
 };
