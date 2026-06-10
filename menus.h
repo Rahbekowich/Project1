@@ -17,6 +17,9 @@ class Menu {
     void viewInventory();
     
     void healParty();
-    
+
     void giveItemToMonster();
+
+    int getAverageMonsterLevel();
+    Monster getMonsterByLevel(int level);
 };

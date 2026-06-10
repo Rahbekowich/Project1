@@ -423,3 +423,53 @@ void Menu::giveItemToMonster()
 
     inGameMenu();
 }
+
+int Menu::getAverageMonsterLevel() {
+    int totalLevel = 0;
+    int monsterCount = 0;
+
+    for (int i = 0; i < 4; i++) {
+        if (player.party[i].name != "")
+        {
+            totalLevel += player.party[i].idNumber;
+            monsterCount++;
+        }
+    }
+
+    if (monsterCount == 0) {
+        return 1;
+    }
+
+    return totalLevel / monsterCount;
+}
+
+Monster Menu::getMonsterByLevel(int level) {
+    if (level < 1)
+    {
+        level = 1;
+    }
+
+    if (level > 12)
+    {
+        level = 12;
+    }
+
+    switch (level)
+    {
+        case 1:  return Monster("slime");
+        case 2:  return Monster("goblin");
+        case 3:  return Monster("skeleton");
+        case 4:  return Monster("horse");
+        case 5:  return Monster("mantis");
+        case 6:  return Monster("zombie");
+        case 7:  return Monster("orc");
+        case 8:  return Monster("knight");
+        case 9:  return Monster("giant");
+        case 10: return Monster("dragon");
+        case 11: return Monster("demon");
+        case 12: return Monster("demon Lord");
+
+        default:
+            return Monster("slime");
+    }
+}
