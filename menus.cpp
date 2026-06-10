@@ -1,194 +1,254 @@
 #include "menus.h"
-#include "monsters.h"
 #include "battles.h"
-#include "player.h"
+#include "monsters.h"
 
 #include <iostream>
 
-
-
 void Menu::mainMenu() {
     int choiceMainMenu = 0;
-
     std::cout << "Welcome to the Main Menu!" << std::endl;
-    std::cout << "Choose your action by entering the according number in your console" << std::endl;
     std::cout << "1. Start new game" << std::endl;
-    std::cout << "2. quit" << std::endl;
-    
+    std::cout << "2. Quit" << std::endl;
+
     std::cin >> choiceMainMenu;
 
-    if (choiceMainMenu == 1){
+    if (choiceMainMenu == 1) {
         characterChoice();
     }
-    else if (choiceMainMenu == 2){
+    else if (choiceMainMenu == 2) {
         std::cout << "Thanks for playing! Goodbye!" << std::endl;
         exit(0);
     }
     else {
-        std::cout << "Invalid choice. Please choose either 1 or 2." << std::endl;
+        std::cout << "Invalid choice." << std::endl;
+        mainMenu();
     }
-};
 
-void Menu::characterChoice(){
-    std::string name;
-    int choiceStarter = 0;
 
-    std::cout << "Now choose your action!" << std::endl;
-    std::cout << "1. Create a new character" << std::endl;
-    std::cout << "2. use an existing character" << std::endl;
-    std::cin >> choiceStarter;
-    if (choiceStarter == 1){
-        std::cout << "Enter your character's name: " << std::endl;
-        std::cin >> name;
-        std::cout << "Your character's name is: " << name << std::endl;
-        starterPokemonChoice();
-    }
-    if (choiceStarter == 2){
-        std::cout << "This feature is not implemented yet. Please choose option 1 to create a new character." << std::endl;
-    }
-    if (choiceStarter != 1 && choiceStarter != 2){
-        std::cout << "Invalid choice. Please choose either 1 or 2." << std::endl;
-    }
+}
+
+void Menu::characterChoice() {
+    std::cout << "Enter your character's name:" << std::endl;
+    std::cin >> player.name;
+
+    std::cout << "Welcome " << player.name << "!" << std::endl;
+
+    player.party[0] = Monster("horse");
+    player.party[1] = Monster("horse");
+
+    std::cout << "You start with two Horses!" << std::endl;
+
+    inGameMenu();
     
-};
+
+}
 
 void Menu::starterPokemonChoice() {
-    int choiceStarterPokemon = 0;
 
-    std::cout << "Now choose your starting fighter!" << std::endl;
-    std::cout << "1. the horse! A well balanced choice" << std::endl;
-    std::cout << "2. the Mantis! A strong but fragile choice" << std::endl;
-    std::cout << "3. the zombie! A tanky but weak choice" << std::endl;
-    std::cin >> choiceStarterPokemon;
-
-    if (choiceStarterPokemon == 1){
-        Monster horse("horse");
-        horse.print();
-        // Here you would add the horse to the player's inventory or something like that
-    }
-    if (choiceStarterPokemon == 2){
-        Monster mantis("mantis");
-        mantis.print();
-        // Here you would add the mantis to the player's inventory or something like that
-    }
-    if (choiceStarterPokemon == 3){
-        Monster zombie("zombie");
-        zombie.print();
-        // Here you would add the zombie to the player's inventory or something like that
-    }
-
-    if (choiceStarterPokemon != 1 && choiceStarterPokemon != 2 && choiceStarterPokemon != 3){
-        std::cout << "Invalid choice. Please choose either 1, 2 or 3." << std::endl;
-    }
-};
+}
 
 void Menu::inGameMenu() {
     int choiceInGameMenu = 0;
 
-    std::cout << "Welcome to the game!" << std::endl;
-    std::cout << "Choose your action by entering the according number in your console" << std::endl;
-    std::cout << "1. fight a monster" << std::endl;
-    std::cout << "2. view your fighters" << std::endl;
-    std::cout << "3. view your inventory" << std::endl;
-    std::cout << "4. quit to main menu" << std::endl;
+    std::cout << std::endl;
+    std::cout << "===== GAME MENU =====" << std::endl;
+    std::cout << "1. Fight a monster" << std::endl;
+    std::cout << "2. View your fighters" << std::endl;
+    std::cout << "3. View inventory" << std::endl;
+    std::cout << "4. Quit to main menu" << std::endl;
+
     std::cin >> choiceInGameMenu;
 
-
-    if (choiceInGameMenu == 1){
-        // Here you would implement the fight a monster functionality
+    if (choiceInGameMenu == 1) {
+        fightMonster();
     }
-    if (choiceInGameMenu == 2){
-        // Here you would implement the view your fighters functionality
+    else if (choiceInGameMenu == 2) {
+        viewFighters();
     }
-    if (choiceInGameMenu == 3){
-        // Here you would implement the view your inventory functionality
+    else if (choiceInGameMenu == 3) {
+        viewInventory();
     }
-    if (choiceInGameMenu == 4){
+    else if (choiceInGameMenu == 4) {
         mainMenu();
     }
-    if (choiceInGameMenu != 1 && choiceInGameMenu != 2 && choiceInGameMenu != 3 && choiceInGameMenu != 4){
-        std::cout << "Invalid choice. Please choose either 1, 2, 3 or 4." << std::endl;
+    else {
+        std::cout << "Invalid choice." << std::endl;
+        inGameMenu();
     }
-
-
-};
+}
 
 void Menu::fightMonster() {
     int choiceFightMonster = 0;
-    std::cout << "You chose to fight a monster!" << std::endl;
-    std::cout << "here are the monsters you can fight!" << std::endl;
-    std::cout << "1. Slime - The weakest enemy available" << std::endl;
-    std::cout << "2. Goblin - A bit stronger than the slime" << std::endl;
-    std::cout << "3. Skeleton - A bit stronger than the goblin" << std::endl;
-    std::cout << "4. Horse - A well balanced enemy" << std::endl;
-    std::cout << "5. Mantis - A strong but fragile enemy " << std::endl;
-    std::cout << "6. Zombie - A tanky but weak enemy" << std::endl;
-    std::cout << "7. Orc - A strong and tanky enemy" << std::endl;
-    std::cout << "8. Knight - A very strong and tanky enemy" << std::endl;
-    std::cout << "9. Giant - A very strong and tanky enemy" << std::endl;
-    std::cout << "10. Dragon - A very strong and tanky enemy" << std::endl;
-    std::cout << "11. Demon - A very strong and tanky enemy" << std::endl;
-    std::cout << "12. Demon Lord - The strongest enemy available" << std::endl; 
+
+    std::cout << std::endl;
+    std::cout << "Choose a monster to fight:" << std::endl;
+    std::cout << "1. Slime" << std::endl;
+    std::cout << "2. Goblin" << std::endl;
+    std::cout << "3. Skeleton" << std::endl;
+    std::cout << "4. Horse" << std::endl;
+    std::cout << "5. Mantis" << std::endl;
+    std::cout << "6. Zombie" << std::endl;
+    std::cout << "7. Orc" << std::endl;
+    std::cout << "8. Knight" << std::endl;
+    std::cout << "9. Giant" << std::endl;
+    std::cout << "10. Dragon" << std::endl;
+    std::cout << "11. Demon" << std::endl;
+
     std::cin >> choiceFightMonster;
 
+    Battle battle(&player);
 
-};
+    if (choiceFightMonster == 1) {
+        battle.startBattle(Monster("slime"));
+    }
+    else if (choiceFightMonster == 2) {
+        battle.startBattle(Monster("goblin"));
+    }
+    else if (choiceFightMonster == 3) {
+        battle.startBattle(Monster("skeleton"));
+    }
+    else if (choiceFightMonster == 4) {
+        battle.startBattle(Monster("horse"));
+    }
+    else if (choiceFightMonster == 5) {
+        battle.startBattle(Monster("mantis"));
+    }
+    else if (choiceFightMonster == 6) {
+        battle.startBattle(Monster("zombie"));
+    }
+    else if (choiceFightMonster == 7) {
+        battle.startBattle(Monster("orc"));
+    } 
+    else if (choiceFightMonster == 8) {
+        battle.startBattle(Monster("knight"));
+    }
+    else if (choiceFightMonster == 9) {
+        battle.startBattle(Monster("giant"));
+    }
+    else if (choiceFightMonster == 10) {
+        battle.startBattle(Monster("dragon"));
+    }
+    else if (choiceFightMonster == 11) {
+        battle.startBattle(Monster("demon"));
+    }
 
+    else {
+        std::cout << "Invalid choice." << std::endl;
+    }
+
+    if (battle.enemy.hp <= 0)
+    {
+        char catchChoice;
+
+        std::cout << "Do you want to catch "
+                << battle.enemy.name
+                << "? (y/n)" << std::endl;
+
+        std::cin >> catchChoice;
+
+        if (catchChoice == 'y' || catchChoice == 'Y')
+        {
+            int freeSlot = -1;
+
+            for (int i = 0; i < 4; i++)
+            {
+                if (player.party[i].name == "")
+                {
+                    freeSlot = i;
+                    break;
+                }
+            }
+
+            if (freeSlot != -1)
+            {
+                player.party[freeSlot] = battle.enemy;
+
+                std::cout << battle.enemy.name
+                        << " was added to your party!"
+                        << std::endl;
+            }
+            else
+            {
+                std::cout << "Your party is full." << std::endl;
+                std::cout << "Choose a monster to replace:"
+                        << std::endl;
+
+                for (int i = 0; i < 4; i++)
+                {
+                    std::cout
+                        << i + 1
+                        << ". "
+                        << player.party[i].name
+                        << std::endl;
+                }
+
+                int replaceChoice;
+                std::cin >> replaceChoice;
+
+                if (replaceChoice >= 1 &&
+                    replaceChoice <= 4)
+                {
+                    player.party[replaceChoice - 1]
+                        = battle.enemy;
+                }
+            }
+        }
+    }
+
+    inGameMenu();
+
+
+}
 
 void Menu::viewFighters() {
-    std::cout << "here are your fighters!" << std::endl;
-    std::cout << playerMonster[0].name << " - HP: " << playerMonster[0].hp << " - ATK: " << playerMonster[0].attack << std::endl;
-    std::cout << playerMonster[1].name << " - HP: " << playerMonster[1].hp << " - ATK: " << playerMonster[1].attack << std::endl;
-    std::cout << playerMonster[2].name << " - HP: " << playerMonster[2] .hp << " - ATK: " << playerMonster[2].attack << std::endl;
-    std::cout << playerMonster[3].name << " - HP: " << playerMonster[3] .hp << " - ATK: " << playerMonster[3].attack << std::endl;
-    std::endl;
-    std::cout << "enter 1 to go back to the in game menu" << std::endl;
-    int choiceViewFighters = 0;
-    std::cin >> choiceViewFighters;
+    std::cout << std::endl;
+    std::cout << "===== YOUR MONSTERS ====="
+    << std::endl;
 
 
-    for (int i = 0; i < 4; i++){
-        if (i == 0){
-            if (playerMonster[0].name == ""){
-                std::cout << "empty slot" << std::endl;
-                emptySlotCount++;
-            }
+    for (int i = 0; i < 4; i++) {
+        if (player.party[i].name == "")
+        {
+            std::cout
+                << i + 1
+                << ". Empty slot"
+                << std::endl;
         }
-        if (i == 1){
-            if (playerMonster[1].name == ""){
-                std::cout << "empty slot" << std::endl;
-                emptySlotCount++;
-            }
-        }
-        if (i == 2){
-            if (playerMonster[2].name == ""){
-                std::cout << "empty slot" << std::endl;
-                emptySlotCount++;
-            }
-        }
-        if (i == 3){
-            if (playerMonster[3].name == ""){
-                std::cout << "empty slot" << std::endl;
-                emptySlotCount++;
-            }
+        else
+        {
+            std::cout
+                << i + 1
+                << ". "
+                << player.party[i].name
+                << " | HP: "
+                << player.party[i].hp
+                << " | ATK: "
+                << player.party[i].attack
+                << std::endl;
         }
     }
 
-    if (choiceViewFighters == 1){
-        inGameMenu();
-    }
-};
+    std::cout << std::endl;
+    std::cout << "Enter 1 to return."
+            << std::endl;
 
+    int choice;
+    std::cin >> choice;
+
+    inGameMenu();
+}
 
 void Menu::viewInventory() {
-    std::cout << "here is your inventory!" << std::endl;
-    std::cout << "This feature is not implemented yet." << std::endl;
-    std::cout << "enter 1 to go back to the in game menu" << std::endl;
-    int choiceViewInventory = 0;
-    std::cin >> choiceViewInventory;
+    std::cout << std::endl;
+    std::cout << "Inventory system not implemented yet."
+    << std::endl;
 
-    if (choiceViewInventory == 1){
-        inGameMenu();
-    }
-};
 
+    std::cout << "Enter 1 to return."
+            << std::endl;
+
+    int choice;
+    std::cin >> choice;
+
+    inGameMenu();
+}
