@@ -22,6 +22,9 @@
     <ClCompile Include="C:\Projects\Project1\caves.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="C:\Projects\Project1\database.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="C:\Projects\Project1\CMakeLists.txt" />

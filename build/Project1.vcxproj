@@ -367,6 +367,7 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
     <ClCompile Include="C:\Projects\Project1\status.cpp" />
     <ClCompile Include="C:\Projects\Project1\items.cpp" />
     <ClCompile Include="C:\Projects\Project1\caves.cpp" />
+    <ClCompile Include="C:\Projects\Project1\database.cpp" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
