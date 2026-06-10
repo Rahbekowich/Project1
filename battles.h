@@ -28,5 +28,7 @@ class Battle{
 
     bool playerHasLivingMonster();
 
-    int battleOutcome();
+    void battleOutcome();
+    
+    void healParty();
 };

@@ -25,12 +25,16 @@ Monster::Monster()
     idNumber = 0;
 }
 
-Monster::Monster(std::string type) {
+Monster::Monster(std::string type)
+{
+    this->type = type;
+
     MonsterData data = MONSTER_DATA[type];
-    name   = data.name;
-    hp     = data.hp;
+
+    name = data.name;
+    hp = data.hp;
     attack = data.attack;
-    idNumber = data.idNumber; // You can set this to a unique value if needed
+    idNumber = data.idNumber;
 }
 
 void Monster::print() {

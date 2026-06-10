@@ -15,6 +15,8 @@ extern std::map<std::string, MonsterData> MONSTER_DATA;
 class Monster {
 public:
     std::string name;
+    std::string type;
+    
     int hp;
     int attack;
     int idNumber;

@@ -131,31 +131,22 @@ void Battle::playerTurn() {
 };
 
 
-int Battle::battleOutcome() {
-    if (!playerHasLivingMonster())
-    {
-    std::cout
-    << "All your monsters were defeated!"
-    << std::endl;
+void Battle::battleOutcome() {
+    if (!playerHasLivingMonster()) {
+        std::cout << "All your monsters were defeated!" << std::endl;
+        std::cout << "Your party has been healed!" << std::endl;
 
-    return 0;
+        for (int i = 0; i < 4; i++)
+        {
+            if (player->party[i].name != "")
+            {
+                player->party[i] =
+                    Monster(player->party[i].type);
+            }
+        }
+    }
 }
 
-if (enemy.hp <= 0)
-{
-    std::cout
-        << "You defeated "
-        << enemy.name
-        << "!"
-        << std::endl;
-
-    return 1;
-}
-
-return -1;
-
-
-}
 
 void Battle::startBattle(Monster monster) {
     enemy = monster;
@@ -213,5 +204,21 @@ while (enemy.hp > 0 && playerHasLivingMonster()) {
 }
 
 battleOutcome();
+healParty();
 
+}
+
+void Battle::healParty()
+{
+    for (int i = 0; i < 4; i++)
+    {
+        if (player->party[i].name != "")
+        {
+            player->party[i] =
+                Monster(player->party[i].type);
+        }
+    }
+
+    std::cout << "Your party has been fully healed!"
+            << std::endl;
 }
