@@ -15,8 +15,9 @@ std::map<std::string, ItemData> ITEM_DATA = {
 
     {"curse", {"Curse", 0, 20, Cursed}},
 
-    {"poison", {"Poison", 0, 20, Poisoned}}
+    {"poison", {"Poison", 0, 20, Poisoned}},
 
+    {"legendary spear", {"Legendary spear Mjolnir", 100, 100, Paralyzed}}
 };
 
 Item::Item() {

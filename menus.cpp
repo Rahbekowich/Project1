@@ -247,10 +247,32 @@ void Menu::viewFighters() {
     inGameMenu();
 }
 
-void Menu::viewInventory() {
+void Menu::viewInventory()
+{
     std::cout << std::endl;
-    std::cout << "Inventory system not implemented yet."
-    << std::endl;
+    std::cout << "===== INVENTORY =====" << std::endl;
+
+    if (player.inventory.empty())
+    {
+        std::cout << "Inventory is empty." << std::endl;
+    }
+    else
+    {
+        for (int i = 0; i < player.inventory.size(); i++)
+        {
+            std::cout
+                << i + 1
+                << ". "
+                << player.inventory[i].name
+                << std::endl;
+        }
+    }
+
+    int choice;
+    std::cin >> choice;
+
+    inGameMenu();
+}
 
 
     std::cout << "Enter 1 to return."

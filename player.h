@@ -1,14 +1,18 @@
-
 #pragma once
+#include "items.h"
 
 #include "monsters.h"
 #include <string>
+#include <vector>
+
 
 class Player {
     public:
     std::string name;
 
     Monster party[4];
+    
+    std::vector<item> inventory;
 
     Player()
     {
