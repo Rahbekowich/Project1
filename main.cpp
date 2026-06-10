@@ -4,12 +4,18 @@
 #include <cstdlib>
 #include <ctime>
 
-int main()
-{
+int main() {
     srand(time(nullptr));
 
     Menu menu;
     menu.mainMenu();
+    Database db;
 
-return 0;
+    if (!db.open())
+    {
+        return 1;
+    }
+
+    db.createTables();
+    return 0;
 }

@@ -31,5 +31,30 @@ void Database::close() {
 
 void Database::createTables()
 {
+    const char* sql =
+        "CREATE TABLE IF NOT EXISTS heroes ("
+        "id INTEGER PRIMARY KEY AUTOINCREMENT,"
+        "name TEXT UNIQUE"
+        ");";
+
+    char* errorMessage = nullptr;
+
+    int result =
+        sqlite3_exec(
+            db,
+            sql,
+            nullptr,
+            nullptr,
+            &errorMessage);
+
+    if (result != SQLITE_OK)
+    {
+        std::cout
+            << "SQL Error: "
+            << errorMessage
+            << std::endl;
+
+        sqlite3_free(errorMessage);
+    }
 }
 
