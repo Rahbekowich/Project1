@@ -22,6 +22,34 @@ static int getHeroesCallback(
     return 0;
 }
 
+struct LoadPlayerData
+{
+    Player* player;
+};
+
+static int loadPlayerCallback(
+    void* data,
+    int argc,
+    char** argv,
+    char** columnNames)
+{
+    LoadPlayerData* loadData =
+        static_cast<LoadPlayerData*>(data);
+
+    int slot =
+        std::stoi(argv[0]);
+
+    std::string monsterType =
+        argv[1];
+
+    loadData->player->party[slot] =
+        Monster(monsterType);
+
+    return 0;
+}
+
+
+
 Database::Database()
 {
     db = nullptr;
@@ -181,6 +209,23 @@ Player Database::loadPlayer(std::string heroName)
     Player player;
 
     player.name = heroName;
+
+    std::string sql =
+        "SELECT slot, monster_type "
+        "FROM party_monsters "
+        "WHERE hero_name='"
+        + heroName +
+        "';";
+
+    LoadPlayerData data;
+    data.player = &player;
+
+    sqlite3_exec(
+        db,
+        sql.c_str(),
+        loadPlayerCallback,
+        &data,
+        nullptr);
 
     return player;
 }
