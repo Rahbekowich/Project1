@@ -31,4 +31,9 @@ class Battle{
     void battleOutcome();
     
     void healParty();
+
+    void useItem();
+
+    bool ranAway = false;
+    
 };

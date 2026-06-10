@@ -106,23 +106,27 @@ void Battle::playerTurn() {
         << std::endl;
 
     std::cout << "1. Attack" << std::endl;
-    std::cout << "2. Run away" << std::endl;
+    std::cout << "2. Use item" << std::endl;
     std::cout << "3. Switch monster" << std::endl;
+    std::cout << "4. Run away" << std::endl;
 
     std::cin >> action;
 
-    if (action == 1)
-    {
+    if (action == 1) {
         playerAttack();
     }
-    else if (action == 2)
-    {
-        enemy.hp = 0;
+    else if (action == 2) {
+        useItem();
     }
-    else if (action == 3)
-    {
+    else if (action == 3) {
         switchMonster();
     }
+    else if (action == 4) {
+        std::cout << "You ran away!" << std::endl;
+        ranAway = true;
+        return;
+    }
+
     else
     {
         std::cout << "Invalid action. Please choose 1, 2 or 3." << std::endl;
@@ -160,7 +164,7 @@ void Battle::startBattle(Monster monster) {
 
     whoStarts();
 
-while (enemy.hp > 0 && playerHasLivingMonster()) {
+while (enemy.hp > 0 && playerHasLivingMonster() && !ranAway) {
     if (attackOrder == 1)
     {
         playerTurn();
@@ -219,4 +223,55 @@ void Battle::healParty()
                 Monster(player->party[i].type);
         }
     }
+}
+
+void Battle::useItem()
+{
+    if (player->party[activeMonster].items.empty())
+    {
+        std::cout << "This monster has no items!" << std::endl;
+        return;
+    }
+
+    std::cout << "Choose an item:" << std::endl;
+
+    for (int i = 0;
+        i < player->party[activeMonster].items.size();
+        i++)
+    {
+        std::cout
+            << i + 1
+            << ". "
+            << player->party[activeMonster].items[i].name
+            << std::endl;
+    }
+
+    int choice;
+    std::cin >> choice;
+
+    choice--;
+
+    if (choice < 0 ||
+        choice >= player->party[activeMonster].items.size())
+    {
+        std::cout << "Invalid choice." << std::endl;
+        return;
+    }
+
+    Item item =
+        player->party[activeMonster].items[choice];
+
+    enemy.hp -= item.damage;
+
+    if (enemy.hp < 0)
+    {
+        enemy.hp = 0;
+    }
+
+    std::cout
+        << item.name
+        << " dealt "
+        << item.damage
+        << " damage!"
+        << std::endl;
 }
