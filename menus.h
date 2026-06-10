@@ -22,4 +22,5 @@ class Menu {
 
     int getAverageMonsterLevel();
     Monster getMonsterByLevel(int level);
+    void enterCave();
 };

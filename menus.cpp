@@ -3,6 +3,7 @@
 #include "monsters.h"
 #include "items.h"
 #include "status.h"
+#include "caves.h"
 
 #include <iostream>
 
@@ -472,4 +473,65 @@ Monster Menu::getMonsterByLevel(int level) {
         default:
             return Monster("slime");
     }
+}
+
+void Menu::enterCave()
+{
+    Cave cave;
+
+    int avg = getAverageMonsterLevel();
+
+    cave.monsters.push_back( getMonsterByLevel(avg - 1));
+
+    cave.monsters.push_back( getMonsterByLevel(avg));
+
+    cave.monsters.push_back(getMonsterByLevel(avg + 1));
+
+    std::vector<std::string> rewards = {
+        "bomb",
+        "firebomb",
+        "thunderbomb",
+        "club",
+        "fan",
+        "curse",
+        "poison"
+        "legendary spear"
+    };
+
+    int randomReward = rand() % rewards.size();
+
+    cave.reward = Item(rewards[randomReward]);
+
+    std::cout << std::endl;
+    std::cout << "===== CAVE =====" << std::endl;
+
+    Battle battle(&player);
+
+    for (int i = 0; i < cave.monsters.size(); i++) {
+        std::cout
+            << "Monster "
+            << i + 1
+            << " of "
+            << cave.monsters.size()
+            << std::endl;
+
+        battle.startBattle(
+            cave.monsters[i]
+        );
+
+        if (!battle.playerHasLivingMonster()) {
+            std::cout
+                << "You failed the cave!"
+                << std::endl;
+
+            inGameMenu();
+            return;
+        }
+    }
+
+    std::cout << std::endl;
+    std::cout << "Cave Cleared!" << std::endl;
+    player.inventory.push_back(cave.reward);
+    std::cout << "You received " << cave.reward.name << "!" << std::endl;
+    inGameMenu();
 }
