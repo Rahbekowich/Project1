@@ -1,7 +1,11 @@
 #pragma once
+
+#include "items.h"
+#include "status.h"
+
 #include <string>
 #include <map>
-
+#include <vector>
 struct MonsterData {
     std::string name;
     int hp;
@@ -16,7 +20,7 @@ class Monster {
 public:
     std::string name;
     std::string type;
-    
+
     int hp;
     int attack;
     int idNumber;
@@ -25,4 +29,7 @@ public:
     Monster(std::string type);
 
     void print();
+    
+    std::vector<Item> items;
+    std::vector<Status> statuses;
 };

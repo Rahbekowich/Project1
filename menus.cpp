@@ -1,6 +1,8 @@
 #include "menus.h"
 #include "battles.h"
 #include "monsters.h"
+#include "items.h"
+#include "status.h"
 
 #include <iostream>
 
@@ -55,8 +57,9 @@ void Menu::inGameMenu() {
     std::cout << "1. Fight a monster" << std::endl;
     std::cout << "2. View your fighters" << std::endl;
     std::cout << "3. View inventory" << std::endl;
-    std::cout << "4. Heal monsters" << std::endl;
-    std::cout << "5. Quit to main menu" << std::endl;
+    std::cout << "4. Equip monsters with items" << std::endl;
+    std::cout << "5. Heal monsters" << std::endl;
+    std::cout << "6. Quit to main menu" << std::endl;
 
     std::cin >> choiceInGameMenu;
 
@@ -69,10 +72,13 @@ void Menu::inGameMenu() {
     else if (choiceInGameMenu == 3) {
         viewInventory();
     }
-    else if (choiceInGameMenu == 4) {
-        healParty();
+    else if (choiceInGameMenu == 4){
+        giveItemToMonster();
     }
     else if (choiceInGameMenu == 5) {
+        healParty();
+    }
+    else if (choiceInGameMenu == 6) {
         mainMenu();
     }
     else {
@@ -256,6 +262,27 @@ void Menu::viewFighters() {
                 << " | ATK: "
                 << player.party[i].attack
                 << std::endl;
+
+            if (!player.party[i].items.empty())
+            {
+                std::cout << "   Items: ";
+
+                for (int j = 0;
+                    j < player.party[i].items.size();
+                    j++)
+                {
+                    std::cout
+                        << player.party[i].items[j].name;
+
+                    if (j <
+                        player.party[i].items.size() - 1)
+                    {
+                        std::cout << ", ";
+                    }
+                }
+
+                std::cout << std::endl;
+            }
         }
     }
 
@@ -311,4 +338,88 @@ void Menu::healParty()
     std::cout << "Your party has been fully healed!" << std::endl;
     inGameMenu();
 
+}
+
+void Menu::giveItemToMonster()
+{
+    if (player.inventory.empty())
+    {
+        std::cout << "You don't have any items!" << std::endl;
+
+        inGameMenu();
+        return;
+    }
+
+    std::cout << std::endl;
+    std::cout << "Choose an item:" << std::endl;
+
+    for (int i = 0; i < player.inventory.size(); i++)
+    {
+        std::cout
+            << i + 1
+            << ". "
+            << player.inventory[i].name
+            << std::endl;
+    }
+
+    int itemChoice;
+    std::cin >> itemChoice;
+
+    itemChoice--;
+
+    if (itemChoice < 0 ||
+        itemChoice >= player.inventory.size())
+    {
+        std::cout << "Invalid choice." << std::endl;
+
+        inGameMenu();
+        return;
+    }
+
+    std::cout << std::endl;
+    std::cout << "Choose a monster:" << std::endl;
+
+    for (int i = 0; i < 4; i++)
+    {
+        if (player.party[i].name != "")
+        {
+            std::cout
+                << i + 1
+                << ". "
+                << player.party[i].name
+                << std::endl;
+        }
+    }
+
+    int monsterChoice;
+    std::cin >> monsterChoice;
+
+    monsterChoice--;
+
+    if (monsterChoice < 0 ||
+        monsterChoice >= 4 ||
+        player.party[monsterChoice].name == "")
+    {
+        std::cout << "Invalid choice." << std::endl;
+
+        inGameMenu();
+        return;
+    }
+
+    player.party[monsterChoice].items.push_back(
+        player.inventory[itemChoice]
+    );
+
+    std::cout
+        << player.inventory[itemChoice].name
+        << " was given to "
+        << player.party[monsterChoice].name
+        << "!"
+        << std::endl;
+
+    player.inventory.erase(
+        player.inventory.begin() + itemChoice
+    );
+
+    inGameMenu();
 }

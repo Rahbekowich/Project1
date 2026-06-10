@@ -17,5 +17,6 @@ class Menu {
     void viewInventory();
     
     void healParty();
-
+    
+    void giveItemToMonster();
 };
