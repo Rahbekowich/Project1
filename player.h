@@ -11,8 +11,8 @@ class Player {
     std::string name;
 
     Monster party[4];
-    
-    std::vector<item> inventory;
+
+    std::vector<Item> inventory;
 
     Player()
     {

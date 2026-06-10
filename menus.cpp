@@ -147,6 +147,29 @@ void Menu::fightMonster() {
 
     if (battle.enemy.hp <= 0)
     {
+        if (rand() % 100 == 0) {
+            std::vector<std::string> possibleDrops =
+            {
+                "bomb",
+                "firebomb",
+                "thunderbomb",
+                "club",
+                "fan"
+            };
+
+            int randomDrop =
+                rand() % possibleDrops.size();
+
+            Item reward(possibleDrops[randomDrop]);
+
+            player.inventory.push_back(reward);
+
+            std::cout
+                << "Lucky! The monster dropped a "
+                << reward.name
+                << "!"
+                << std::endl;
+        }
         char catchChoice;
 
         std::cout << "Do you want to catch "
@@ -155,8 +178,7 @@ void Menu::fightMonster() {
 
         std::cin >> catchChoice;
 
-        if (catchChoice == 'y' || catchChoice == 'Y')
-        {
+        if (catchChoice == 'y' || catchChoice == 'Y') {
             int freeSlot = -1;
 
             for (int i = 0; i < 4; i++)
@@ -274,15 +296,6 @@ void Menu::viewInventory()
     inGameMenu();
 }
 
-
-    std::cout << "Enter 1 to return."
-            << std::endl;
-
-    int choice;
-    std::cin >> choice;
-
-    inGameMenu();
-}
 
 void Menu::healParty()
 {
