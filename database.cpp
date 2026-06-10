@@ -58,8 +58,17 @@ void Database::createTables()
     }
 }
 
-void Database::savePlayer(Player& player)
+
+std::vector<std::string> Database::getAllHeroes()
 {
+    std::vector<std::string> heroes;
+
+    return heroes;
+}
+
+void Database::savePlayer(Player& player) {
+
+
     std::string sql =
         "INSERT OR REPLACE INTO heroes(name) VALUES('"
         + player.name +
@@ -74,13 +83,11 @@ void Database::savePlayer(Player& player)
         nullptr,
         &errorMessage);
 
+
     if (result != SQLITE_OK)
     {
-        std::cout
-            << "SQL Error: "
-            << errorMessage
-            << std::endl;
-
+        std::cout << "SQL Error: " << errorMessage << std::endl;
         sqlite3_free(errorMessage);
     }
+
 }
