@@ -1,15 +1,20 @@
-#pragma once 
 
-class Menu {
+#pragma once
+
+#include "monsters.h"
+
+class Menu
+{
 public:
-    int emptySlotCount = 0;
-
+    Player player;
     void mainMenu();
     void characterChoice();
-    void inGameMenu();
     void starterPokemonChoice();
+
+    void inGameMenu();
     void fightMonster();
+
     void viewFighters();
     void viewInventory();
-};  
 
+};

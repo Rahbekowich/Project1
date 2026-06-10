@@ -1,6 +1,7 @@
 #include "menus.h"
 #include "monsters.h"
 #include "battles.h"
+#include "player.h"
 
 #include <iostream>
 

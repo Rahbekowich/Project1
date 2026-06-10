@@ -1,24 +1,32 @@
 #pragma once
 #include "monsters.h"
 #include "menus.h"
+#include "player.h"
+
 #include <iostream>
 
-
-class Battle {
-public:
-    int attackOrder = 0;       
-    Monster playerMonster[4];
-    Monster monster;
+class Battle{
+    public:
+    Player* player;
+    Monster enemy;
 
     int activeMonster = 0;
+    int attackOrder = 0;
 
-    void switchMonster();
-    void startBattle(Monster monster);
+    Battle(Player* p);
+
     void whoStarts();
+
+    void startBattle(Monster monster);
+
     void playerTurn();
     void monsterTurn();
-    void playerAttack(Monster monster);
-    int battleOutcome();
+
     void playerAttack();
-    
-};                             
+
+    void switchMonster();
+
+    bool playerHasLivingMonster();
+
+    int battleOutcome();
+};

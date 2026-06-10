@@ -1,4 +1,15 @@
+
 #include "menus.h"
 
-#include <iostream>
+#include <cstdlib>
+#include <ctime>
 
+int main()
+{
+    srand(time(nullptr));
+
+    Menu menu;
+    menu.mainMenu();
+
+return 0;
+}
