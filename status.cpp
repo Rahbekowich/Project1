@@ -26,6 +26,7 @@ std::string Status::getName() {
         case Cursed:
             return "Cursed";
 
+
         default:
             return "Unknown";
     }
