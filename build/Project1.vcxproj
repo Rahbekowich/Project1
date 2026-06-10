@@ -360,10 +360,13 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
     </CustomBuild>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="C:\Projects\Project1\battles.cpp" />
     <ClCompile Include="C:\Projects\Project1\main.cpp" />
     <ClCompile Include="C:\Projects\Project1\menus.cpp" />
+    <ClCompile Include="C:\Projects\Project1\battles.cpp" />
     <ClCompile Include="C:\Projects\Project1\monsters.cpp" />
+    <ClCompile Include="C:\Projects\Project1\status.cpp" />
+    <ClCompile Include="C:\Projects\Project1\items.cpp" />
+    <ClCompile Include="C:\Projects\Project1\caves.cpp" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

@@ -2,8 +2,6 @@
 #include <iostream>
 
 
-#include "status.h"
-
 Status::Status(StatusType type, int duration) {
     this->type = type;
     this->duration = duration;
