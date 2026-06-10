@@ -219,7 +219,4 @@ void Battle::healParty()
                 Monster(player->party[i].type);
         }
     }
-
-    std::cout << "Your party has been fully healed!"
-            << std::endl;
 }
