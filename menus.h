@@ -15,6 +15,7 @@ class Menu {
 
     void viewFighters();
     void viewInventory();
-
+    
+    void healParty();
 
 };

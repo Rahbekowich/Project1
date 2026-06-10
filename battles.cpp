@@ -149,6 +149,7 @@ void Battle::battleOutcome() {
 
 
 void Battle::startBattle(Monster monster) {
+    activeMonster = 0;
     enemy = monster;
 
     std::cout

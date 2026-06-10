@@ -55,7 +55,8 @@ void Menu::inGameMenu() {
     std::cout << "1. Fight a monster" << std::endl;
     std::cout << "2. View your fighters" << std::endl;
     std::cout << "3. View inventory" << std::endl;
-    std::cout << "4. Quit to main menu" << std::endl;
+    std::cout << "4. Heal monsters" << std::endl;
+    std::cout << "5. Quit to main menu" << std::endl;
 
     std::cin >> choiceInGameMenu;
 
@@ -69,6 +70,9 @@ void Menu::inGameMenu() {
         viewInventory();
     }
     else if (choiceInGameMenu == 4) {
+        healParty();
+    }
+    else if (choiceInGameMenu == 5) {
         mainMenu();
     }
     else {
@@ -251,4 +255,20 @@ void Menu::viewInventory() {
     std::cin >> choice;
 
     inGameMenu();
+}
+
+void Menu::healParty()
+{
+    for (int i = 0; i < 4; i++)
+    {
+        if (player.party[i].name != "")
+        {
+            player.party[i] =
+                Monster(player.party[i].type);
+        }
+    }
+
+    std::cout << "Your party has been fully healed!" << std::endl;
+    inGameMenu();
+
 }
