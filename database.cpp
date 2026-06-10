@@ -1,7 +1,9 @@
 #include "database.h"
 #include "sqlite3.h"
-#include <iostream>
 
+#include <iostream>
+#include <vector>
+#include <string>
 
 static int getHeroesCallback(
     void* data,
@@ -20,20 +22,22 @@ static int getHeroesCallback(
     return 0;
 }
 
-
-
-Database::Database() {
+Database::Database()
+{
     db = nullptr;
 }
 
-Database::~Database() {
+Database::~Database()
+{
     close();
 }
 
-bool Database::open() {
+bool Database::open()
+{
     int result = sqlite3_open("game.db", &db);
 
-    if (result != SQLITE_OK) {
+    if (result != SQLITE_OK)
+    {
         std::cout << "Could not open database!" << std::endl;
         return false;
     }
@@ -42,8 +46,10 @@ bool Database::open() {
     return true;
 }
 
-void Database::close() {
-    if (db != nullptr) {
+void Database::close()
+{
+    if (db != nullptr)
+    {
         sqlite3_close(db);
         db = nullptr;
     }
@@ -51,33 +57,37 @@ void Database::close() {
 
 void Database::createTables()
 {
-    const char* sql = R"(
+    const char* sqlHeroes = R"(
         CREATE TABLE IF NOT EXISTS heroes (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             name TEXT UNIQUE
         );
     )";
 
+    const char* sqlParty = R"(
+        CREATE TABLE IF NOT EXISTS party_monsters (
+            hero_name TEXT,
+            slot INTEGER,
+            monster_type TEXT
+        );
+    )";
+
     char* errorMessage = nullptr;
 
-    int result = sqlite3_exec(
+    sqlite3_exec(
         db,
-        sql,
+        sqlHeroes,
         nullptr,
         nullptr,
         &errorMessage);
 
-    if (result != SQLITE_OK)
-    {
-        std::cout
-            << "SQL Error: "
-            << errorMessage
-            << std::endl;
-
-        sqlite3_free(errorMessage);
-    }
+    sqlite3_exec(
+        db,
+        sqlParty,
+        nullptr,
+        nullptr,
+        &errorMessage);
 }
-
 
 std::vector<std::string> Database::getAllHeroes()
 {
@@ -110,34 +120,67 @@ std::vector<std::string> Database::getAllHeroes()
 
 void Database::savePlayer(Player& player)
 {
-    std::string sql =
+    std::string heroSql =
         "INSERT OR REPLACE INTO heroes(name) VALUES('"
         + player.name +
         "');";
 
     char* errorMessage = nullptr;
 
-    int result = sqlite3_exec(
+    sqlite3_exec(
         db,
-        sql.c_str(),
+        heroSql.c_str(),
         nullptr,
         nullptr,
         &errorMessage);
-        
-    if (result != SQLITE_OK)
-    {
-        std::cout
-            << "SQL Error: "
-            << errorMessage
-            << std::endl;
 
-        sqlite3_free(errorMessage);
-    }
-    else
+    std::string deleteSql =
+        "DELETE FROM party_monsters WHERE hero_name='"
+        + player.name +
+        "';";
+
+    sqlite3_exec(
+        db,
+        deleteSql.c_str(),
+        nullptr,
+        nullptr,
+        nullptr);
+
+    for (int i = 0; i < 4; i++)
     {
-        std::cout
-            << "Saved player: "
-            << player.name
-            << std::endl;
+        if (player.party[i].name != "")
+        {
+            std::string monsterSql =
+                "INSERT INTO party_monsters "
+                "(hero_name, slot, monster_type) "
+                "VALUES('"
+                + player.name
+                + "', "
+                + std::to_string(i)
+                + ", '"
+                + player.party[i].type
+                + "');";
+
+            sqlite3_exec(
+                db,
+                monsterSql.c_str(),
+                nullptr,
+                nullptr,
+                nullptr);
+        }
     }
+
+    std::cout
+        << "Saved player: "
+        << player.name
+        << std::endl;
+}
+
+Player Database::loadPlayer(std::string heroName)
+{
+    Player player;
+
+    player.name = heroName;
+
+    return player;
 }
