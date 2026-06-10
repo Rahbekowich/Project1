@@ -34,7 +34,8 @@ class Battle{
 
     void useItem();
     void applyStatuses(Monster& monster);
+    void applyCurseDamage(Monster& monster);
     bool canAct(Monster& monster);
-
+    
     bool ranAway = false;
 };

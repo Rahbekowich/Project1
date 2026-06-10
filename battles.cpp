@@ -67,6 +67,8 @@ void Battle::monsterTurn() {
                 << damage
                 << " damage!"
                 << std::endl;
+
+    applyCurseDamage(enemy);
 };
 
 void Battle::switchMonster() {
@@ -365,4 +367,25 @@ bool Battle::canAct(Monster& monster) {
     }
 
     return true;
+}
+
+void Battle::applyCurseDamage(Monster& monster)
+{
+    for (int i = 0; i < monster.statuses.size(); i++)
+    {
+        if (monster.statuses[i].type == Cursed)
+        {
+            monster.hp -= 2;
+
+            if (monster.hp < 0)
+            {
+                monster.hp = 0;
+            }
+
+            std::cout
+                << monster.name
+                << " is cursed and takes 2 damage!"
+                << std::endl;
+        }
+    }
 }
