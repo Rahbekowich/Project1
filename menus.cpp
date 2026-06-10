@@ -56,11 +56,12 @@ void Menu::inGameMenu() {
     std::cout << std::endl;
     std::cout << "===== GAME MENU =====" << std::endl;
     std::cout << "1. Fight a monster" << std::endl;
-    std::cout << "2. View your fighters" << std::endl;
-    std::cout << "3. View inventory" << std::endl;
-    std::cout << "4. Equip monsters with items" << std::endl;
-    std::cout << "5. Heal monsters" << std::endl;
-    std::cout << "6. Quit to main menu" << std::endl;
+    std::cout << "2. Enter a cave (3 or more monsters is recommended for caves)" << std::endl;
+    std::cout << "3. View your fighters" << std::endl;
+    std::cout << "4. View inventory" << std::endl;
+    std::cout << "5. Equip monsters with items" << std::endl;
+    std::cout << "6. Heal monsters" << std::endl;
+    std::cout << "7. Quit to main menu" << std::endl;
 
     std::cin >> choiceInGameMenu;
 
@@ -68,18 +69,21 @@ void Menu::inGameMenu() {
         fightMonster();
     }
     else if (choiceInGameMenu == 2) {
-        viewFighters();
+        enterCave();
     }
     else if (choiceInGameMenu == 3) {
+        viewFighters();
+    }
+    else if (choiceInGameMenu == 4) {
         viewInventory();
     }
-    else if (choiceInGameMenu == 4){
+    else if (choiceInGameMenu == 5){
         giveItemToMonster();
     }
-    else if (choiceInGameMenu == 5) {
+    else if (choiceInGameMenu == 6) {
         healParty();
     }
-    else if (choiceInGameMenu == 6) {
+    else if (choiceInGameMenu == 7) {
         mainMenu();
     }
     else {
@@ -535,3 +539,4 @@ void Menu::enterCave()
     std::cout << "You received " << cave.reward.name << "!" << std::endl;
     inGameMenu();
 }
+
