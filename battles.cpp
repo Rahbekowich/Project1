@@ -42,10 +42,13 @@ void Battle::playerAttack() {
 }
 
 void Battle::monsterTurn() {
-    std::cout << "The "
-    << enemy.name
-    << " attacks!"
-    << std::endl;
+    applyStatuses(enemy);
+
+    if (enemy.hp <= 0) {
+        return;
+    }
+
+    std::cout << "The " << enemy.name << " attacks!" << std::endl;
 
     int damage = enemy.attack;
 
@@ -91,6 +94,7 @@ bool Battle::playerHasLivingMonster() {
 void Battle::playerTurn() {
     int action;
     std::cout << std::endl;
+    applyStatuses(player->party[activeMonster]);
 
     std::cout
         << "Your active monster is: "
@@ -157,10 +161,7 @@ void Battle::startBattle(Monster monster) {
     enemy = monster;
 
     std::cout
-        << "A wild "
-        << enemy.name
-        << " appears!"
-        << std::endl;
+        << "A wild " << enemy.name << " appears!" << std::endl;
 
     whoStarts();
 
@@ -262,6 +263,23 @@ void Battle::useItem()
         player->party[activeMonster].items[choice];
 
     enemy.hp -= item.damage;
+    if (item.statusChance > 0) {
+        int roll = rand() % 100;
+
+        if (roll < item.statusChance){
+            
+            Status newStatus(item.status, 3);
+
+            enemy.statuses.push_back(newStatus);
+
+            std::cout
+                << enemy.name
+                << " was afflicted with "
+                << newStatus.getName()
+                << "!"
+                << std::endl;
+        }
+    }
 
     if (enemy.hp < 0)
     {
@@ -274,4 +292,39 @@ void Battle::useItem()
         << item.damage
         << " damage!"
         << std::endl;
+}
+
+void Battle::applyStatuses(Monster& monster)
+{
+    for (int i = 0; i < monster.statuses.size(); i++)
+    {
+        Status& status = monster.statuses[i];
+
+        if (status.type == Poisoned)
+        {
+            monster.hp -= 2;
+
+            std::cout
+                << monster.name
+                << " takes 2 poison damage!"
+                << std::endl;
+
+            if (monster.hp < 0)
+            {
+                monster.hp = 0;
+            }
+        }
+
+        status.duration--;
+    }
+
+    for (int i = monster.statuses.size() - 1; i >= 0; i--)
+    {
+        if (monster.statuses[i].duration <= 0)
+        {
+            monster.statuses.erase(
+                monster.statuses.begin() + i
+            );
+        }
+    }
 }

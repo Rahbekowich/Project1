@@ -33,7 +33,8 @@ class Battle{
     void healParty();
 
     void useItem();
-
+    void applyStatuses(Monster& monster);
+    
     bool ranAway = false;
     
 };
