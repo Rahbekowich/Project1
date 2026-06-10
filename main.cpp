@@ -1,5 +1,6 @@
 
 #include "menus.h"
+#include "database.h"
 
 #include <cstdlib>
 #include <ctime>
