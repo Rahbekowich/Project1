@@ -11,4 +11,5 @@ add_executable(Project1
     items.cpp
     caves.cpp
     database.cpp
+    sqlite3.c
 )
