@@ -44,6 +44,10 @@ void Battle::playerAttack() {
 void Battle::monsterTurn() {
     applyStatuses(enemy);
 
+    if (!canAct(enemy)) {
+        return;
+    }
+
     if (enemy.hp <= 0) {
         return;
     }
@@ -267,7 +271,7 @@ void Battle::useItem()
         int roll = rand() % 100;
 
         if (roll < item.statusChance){
-            
+
             Status newStatus(item.status, 3);
 
             enemy.statuses.push_back(newStatus);
@@ -294,23 +298,17 @@ void Battle::useItem()
         << std::endl;
 }
 
-void Battle::applyStatuses(Monster& monster)
-{
-    for (int i = 0; i < monster.statuses.size(); i++)
-    {
+void Battle::applyStatuses(Monster& monster) {
+    for (int i = static_cast<int>(monster.statuses.size()) - 1; i >= 0; i--) {
         Status& status = monster.statuses[i];
 
-        if (status.type == Poisoned)
-        {
+        if (status.type == Poisoned) {
             monster.hp -= 2;
 
             std::cout
-                << monster.name
-                << " takes 2 poison damage!"
-                << std::endl;
+                << monster.name << " takes 2 poison damage!" << std::endl;
 
-            if (monster.hp < 0)
-            {
+            if (monster.hp < 0) {
                 monster.hp = 0;
             }
         }
@@ -327,4 +325,44 @@ void Battle::applyStatuses(Monster& monster)
             );
         }
     }
+}
+
+bool Battle::canAct(Monster& monster) {
+    for (int i = 0; i < monster.statuses.size(); i++)
+    {
+        if (monster.statuses[i].type == Stunned)
+        {
+            std::cout
+                << monster.name
+                << " is stunned and loses its turn!"
+                << std::endl;
+
+            return false;
+        }
+
+        if (monster.statuses[i].type == Frozen)
+        {
+            std::cout
+                << monster.name
+                << " is frozen solid!"
+                << std::endl;
+
+            return false;
+        }
+
+        if (monster.statuses[i].type == Paralyzed)
+        {
+            if (rand() % 100 < 30)
+            {
+                std::cout
+                    << monster.name
+                    << " is paralyzed and cannot move!"
+                    << std::endl;
+
+                return false;
+            }
+        }
+    }
+
+    return true;
 }
