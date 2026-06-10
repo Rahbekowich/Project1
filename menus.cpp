@@ -135,9 +135,13 @@ void Menu::fightMonster() {
     else if (choiceFightMonster == 11) {
         battle.startBattle(Monster("demon"));
     }
+    else if (choiceFightMonster == 12) {
+        battle.startBattle(Monster("demon Lord"));
+    }
 
     else {
         std::cout << "Invalid choice." << std::endl;
+        inGameMenu();
     }
 
     if (battle.enemy.hp <= 0)
