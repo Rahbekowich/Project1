@@ -97,6 +97,7 @@ void Menu::fightMonster() {
     std::cout << "9. Giant" << std::endl;
     std::cout << "10. Dragon" << std::endl;
     std::cout << "11. Demon" << std::endl;
+    std::cout << "12. Demon Lord" << std::endl;
 
     std::cin >> choiceFightMonster;
 
@@ -136,12 +137,12 @@ void Menu::fightMonster() {
         battle.startBattle(Monster("demon"));
     }
     else if (choiceFightMonster == 12) {
-        battle.startBattle(Monster("demon Lord"));
+        battle.startBattle(Monster("demonlord"));
     }
 
     else {
         std::cout << "Invalid choice." << std::endl;
-        inGameMenu();
+        fightMonster();
     }
 
     if (battle.enemy.hp <= 0)

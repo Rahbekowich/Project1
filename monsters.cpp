@@ -14,7 +14,7 @@ std::map<std::string, MonsterData> MONSTER_DATA = {
     {"giant",       {"Giant",    30, 12, 9}},
     {"dragon",      {"Dragon", 40, 15, 10}},
     {"demon",       {"Demon", 50, 20, 11}},
-    {"demon Lord",  {"Demon Lord", 100, 30, 12}}
+    {"demonlord",  {"Demon Lord", 100, 30, 12}}
 };
 
 Monster::Monster()
