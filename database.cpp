@@ -31,21 +31,21 @@ void Database::close() {
 
 void Database::createTables()
 {
-    const char* sql =
-        "CREATE TABLE IF NOT EXISTS heroes ("
-        "id INTEGER PRIMARY KEY AUTOINCREMENT,"
-        "name TEXT UNIQUE"
-        ");";
+    const char* sql = R"(
+        CREATE TABLE IF NOT EXISTS heroes (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            name TEXT UNIQUE
+        );
+    )";
 
     char* errorMessage = nullptr;
 
-    int result =
-        sqlite3_exec(
-            db,
-            sql,
-            nullptr,
-            nullptr,
-            &errorMessage);
+    int result = sqlite3_exec(
+        db,
+        sql,
+        nullptr,
+        nullptr,
+        &errorMessage);
 
     if (result != SQLITE_OK)
     {
@@ -58,3 +58,29 @@ void Database::createTables()
     }
 }
 
+void Database::savePlayer(Player& player)
+{
+    std::string sql =
+        "INSERT OR REPLACE INTO heroes(name) VALUES('"
+        + player.name +
+        "');";
+
+    char* errorMessage = nullptr;
+
+    int result = sqlite3_exec(
+        db,
+        sql.c_str(),
+        nullptr,
+        nullptr,
+        &errorMessage);
+
+    if (result != SQLITE_OK)
+    {
+        std::cout
+            << "SQL Error: "
+            << errorMessage
+            << std::endl;
+
+        sqlite3_free(errorMessage);
+    }
+}

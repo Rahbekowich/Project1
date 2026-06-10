@@ -1,4 +1,3 @@
-
 #include "menus.h"
 #include "database.h"
 
@@ -8,8 +7,6 @@
 int main() {
     srand(time(nullptr));
 
-    Menu menu;
-    menu.mainMenu();
     Database db;
 
     if (!db.open())
@@ -18,5 +15,9 @@ int main() {
     }
 
     db.createTables();
+
+    Menu menu;
+    menu.mainMenu();
+
     return 0;
 }
