@@ -290,3 +290,24 @@ void Database::recordMonsterKill(
         nullptr,
         nullptr);
 }
+
+void Database::recordItemUse(
+    std::string item,
+    std::string playerName)
+{
+    std::string sql =
+        "INSERT INTO item_uses "
+        "(player_name, item_name) "
+        "VALUES('"
+        + playerName
+        + "', '"
+        + item
+        + "');";
+
+    sqlite3_exec(
+        db,
+        sql.c_str(),
+        nullptr,
+        nullptr,
+        nullptr);
+}
