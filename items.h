@@ -15,14 +15,15 @@ struct ItemData
 
 extern std::map<std::string, ItemData> ITEM_DATA;
 
-class Item
-{
+class Item {
 public:
-    std::string name;
-    int damage;
-    int statusChance;
-    StatusType status;
+        std::string type;
+        std::string name;
 
-    Item();
-    Item(std::string type);
-};
+        int damage;
+        int statusChance;
+        StatusType status;
+
+        Item();
+        Item(std::string type);
+    };

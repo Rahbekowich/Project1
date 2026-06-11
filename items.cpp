@@ -28,12 +28,12 @@ Item::Item() {
 }
 
 Item::Item(std::string type) {
+    this->type = type;
+
     ItemData data = ITEM_DATA[type];
 
     name = data.name;
     damage = data.damage;
     statusChance = data.statusChance;
     status = data.status;
-
-
 }
