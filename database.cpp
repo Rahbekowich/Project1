@@ -22,6 +22,23 @@ static int getHeroesCallback(
     return 0;
 }
 
+static int loadInventoryCallback(
+    void* data,
+    int argc,
+    char** argv,
+    char** columnNames)
+{
+    LoadPlayerData* loadData =
+        static_cast<LoadPlayerData*>(data);
+
+    std::string itemType = argv[0];
+
+    loadData->player->inventory.push_back(
+        Item(itemType)
+    );
+
+    return 0;
+}
 struct LoadPlayerData
 {
     Player* player;
@@ -36,11 +53,9 @@ static int loadPlayerCallback(
     LoadPlayerData* loadData =
         static_cast<LoadPlayerData*>(data);
 
-    int slot =
-        std::stoi(argv[0]);
+    int slot = std::stoi(argv[0]);
 
-    std::string monsterType =
-        argv[1];
+    std::string monsterType = argv[1];
 
     loadData->player->party[slot] =
         Monster(monsterType);
@@ -250,20 +265,35 @@ Player Database::loadPlayer(std::string heroName)
 
     player.name = heroName;
 
-    std::string sql =
+    LoadPlayerData data;
+    data.player = &player;
+
+    std::string monsterSql =
         "SELECT slot, monster_type "
         "FROM party_monsters "
         "WHERE hero_name='"
         + heroName +
         "';";
 
-    LoadPlayerData data;
-    data.player = &player;
+        
+    sqlite3_exec(
+        db,
+        monsterSql.c_str(),
+        loadPlayerCallback,
+        &data,
+        nullptr);
+
+    std::string inventorySql =
+        "SELECT item_type "
+        "FROM inventory "
+        "WHERE hero_name='"
+        + heroName +
+        "';";
 
     sqlite3_exec(
         db,
-        sql.c_str(),
-        loadPlayerCallback,
+        inventorySql.c_str(),
+        loadInventoryCallback,
         &data,
         nullptr);
 
