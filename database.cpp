@@ -269,3 +269,24 @@ Player Database::loadPlayer(std::string heroName)
 
     return player;
 }
+
+void Database::recordMonsterKill(
+    std::string monster,
+    std::string playerName)
+{
+    std::string sql =
+        "INSERT INTO monster_kills "
+        "(player_name, monster_type) "
+        "VALUES('"
+        + playerName
+        + "', '"
+        + monster
+        + "');";
+
+    sqlite3_exec(
+        db,
+        sql.c_str(),
+        nullptr,
+        nullptr,
+        nullptr);
+}
