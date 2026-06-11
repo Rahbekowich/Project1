@@ -159,30 +159,27 @@ std::vector<std::string> Database::getAllHeroes()
     return heroes;
 }
 
-void Database::savePlayer(Player& player)
-{
+void Database::savePlayer(Player& player) {
     std::string heroSql =
         "INSERT OR REPLACE INTO heroes(name) VALUES('"
         + player.name +
         "');";
-
-    char* errorMessage = nullptr;
 
     sqlite3_exec(
         db,
         heroSql.c_str(),
         nullptr,
         nullptr,
-        &errorMessage);
+        nullptr);
 
-    std::string deleteSql =
+    std::string deleteParty =
         "DELETE FROM party_monsters WHERE hero_name='"
         + player.name +
         "';";
 
     sqlite3_exec(
         db,
-        deleteSql.c_str(),
+        deleteParty.c_str(),
         nullptr,
         nullptr,
         nullptr);
@@ -211,12 +208,42 @@ void Database::savePlayer(Player& player)
         }
     }
 
+    std::string deleteInventory =
+        "DELETE FROM inventory WHERE hero_name='"
+        + player.name +
+        "';";
+
+    sqlite3_exec(
+        db,
+        deleteInventory.c_str(),
+        nullptr,
+        nullptr,
+        nullptr);
+
+    for (Item item : player.inventory)
+    {
+        std::string inventorySql =
+            "INSERT INTO inventory "
+            "(hero_name, item_type) "
+            "VALUES('"
+            + player.name
+            + "', '"
+            + item.type
+            + "');";
+
+        sqlite3_exec(
+            db,
+            inventorySql.c_str(),
+            nullptr,
+            nullptr,
+            nullptr);
+    }
+
     std::cout
         << "Saved player: "
         << player.name
         << std::endl;
 }
-
 Player Database::loadPlayer(std::string heroName)
 {
     Player player;
