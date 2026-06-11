@@ -311,3 +311,10 @@ void Database::recordItemUse(
         nullptr,
         nullptr);
 }
+
+void Database::printStatistics()
+{
+    std::cout
+        << "Statistics not implemented yet."
+        << std::endl;
+}
