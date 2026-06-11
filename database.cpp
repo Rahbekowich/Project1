@@ -100,21 +100,34 @@ void Database::createTables()
         );
     )";
 
+    const char* sqlInventory = R"(
+        CREATE TABLE IF NOT EXISTS inventory (
+            hero_name TEXT,
+            item_type TEXT
+        );
+    )";
+
+    const char* sqlMonsterKills = R"(
+        CREATE TABLE IF NOT EXISTS monster_kills (
+            player_name TEXT,
+            monster_type TEXT
+        );
+    )";
+
+    const char* sqlItemUses = R"(
+        CREATE TABLE IF NOT EXISTS item_uses (
+            player_name TEXT,
+            item_name TEXT
+        );
+    )";
+
     char* errorMessage = nullptr;
 
-    sqlite3_exec(
-        db,
-        sqlHeroes,
-        nullptr,
-        nullptr,
-        &errorMessage);
-
-    sqlite3_exec(
-        db,
-        sqlParty,
-        nullptr,
-        nullptr,
-        &errorMessage);
+    sqlite3_exec(db, sqlHeroes, nullptr, nullptr, &errorMessage);
+    sqlite3_exec(db, sqlParty, nullptr, nullptr, &errorMessage);
+    sqlite3_exec(db, sqlInventory, nullptr, nullptr, &errorMessage);
+    sqlite3_exec(db, sqlMonsterKills, nullptr, nullptr, &errorMessage);
+    sqlite3_exec(db, sqlItemUses, nullptr, nullptr, &errorMessage);
 }
 
 std::vector<std::string> Database::getAllHeroes()
