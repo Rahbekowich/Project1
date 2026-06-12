@@ -62,7 +62,8 @@ void Menu::inGameMenu() {
     std::cout << "4. View inventory" << std::endl;
     std::cout << "5. Equip monsters with items" << std::endl;
     std::cout << "6. Heal monsters" << std::endl;
-    std::cout << "7. Quit to main menu" << std::endl;
+    std::cout << "7. Show your stats" << std::endl;
+    std::cout << "8. Quit to main menu" << std::endl;
 
     std::cin >> choiceInGameMenu;
 
@@ -85,6 +86,14 @@ void Menu::inGameMenu() {
         healParty();
     }
     else if (choiceInGameMenu == 7) {
+        Database db;
+
+        db.open();
+        db.printStatistics();
+        db.close();
+    }
+
+    else if (choiceInGameMenu == 8) {
         mainMenu();
     }
     else {

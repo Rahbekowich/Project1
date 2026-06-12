@@ -1,9 +1,18 @@
 #include "database.h"
 #include "sqlite3.h"
+#include "menus.h"
 
 #include <iostream>
 #include <vector>
 #include <string>
+
+
+struct LoadPlayerData
+{
+    Player* player;
+};
+
+
 
 static int getHeroesCallback(
     void* data,
@@ -39,10 +48,21 @@ static int loadInventoryCallback(
 
     return 0;
 }
-struct LoadPlayerData
-{
-    Player* player;
-};
+
+static int totalKillsCallback(
+    void* data,
+    int argc,
+    char** argv,
+    char** columnNames) {
+    int* count = static_cast<int*>(data);
+
+    if (argv[0] != nullptr) {
+        *count = std::stoi(argv[0]);
+    }
+
+    return 0;
+}
+
 
 static int loadPlayerCallback(
     void* data,
@@ -254,10 +274,6 @@ void Database::savePlayer(Player& player) {
             nullptr);
     }
 
-    std::cout
-        << "Saved player: "
-        << player.name
-        << std::endl;
 }
 Player Database::loadPlayer(std::string heroName)
 {
@@ -342,9 +358,33 @@ void Database::recordItemUse(
         nullptr);
 }
 
-void Database::printStatistics()
-{
-    std::cout
-        << "Statistics not implemented yet."
-        << std::endl;
+void Database::printStatistics() {
+    int totalKills = 0;
+    int choice = 0;
+
+    sqlite3_exec(
+        db,
+        "SELECT COUNT(*) FROM monster_kills;",
+        totalKillsCallback,
+        &totalKills,
+        nullptr);
+
+    int totalItemsUsed = 0;
+
+    sqlite3_exec(
+        db,
+        "SELECT COUNT(*) FROM item_uses;",
+        totalKillsCallback,
+        &totalItemsUsed,
+        nullptr);
+
+    std::cout << "===== STATISTICS =====" << std::endl;
+
+    std::cout << "Total monsters defeated: " << std::endl;
+    std::cout << totalKills << std::endl;
+
+    std::cout << "Total items used: " << std::endl;
+    std::cout << totalItemsUsed << std::endl;
+    std::cout << std::endl;
+    std::cout << std::endl;
 }
