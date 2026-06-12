@@ -575,6 +575,7 @@ void Menu::loadHero() {
             << ". "
             << heroes[i]
             << std::endl;
+
     }
 
     int choice;
@@ -593,7 +594,7 @@ void Menu::loadHero() {
         std::cout << "Invalid choice." << std::endl;
 
         db.close();
-        inGameMenu();
+        return;
     }
 
     player = db.loadPlayer(
@@ -607,4 +608,5 @@ void Menu::loadHero() {
         << player.name
         << "!"
         << std::endl;
+    inGameMenu();
 }
