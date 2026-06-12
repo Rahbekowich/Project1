@@ -53,46 +53,48 @@ void Menu::characterChoice() {
 
 
 void Menu::inGameMenu() {
-    int choiceInGameMenu = 0;
+    while (true){
 
-    std::cout << std::endl;
-    std::cout << "===== GAME MENU =====" << std::endl;
-    std::cout << "1. Fight a monster" << std::endl;
-    std::cout << "2. Enter a cave (3 or more monsters is recommended for caves)" << std::endl;
-    std::cout << "3. View your fighters" << std::endl;
-    std::cout << "4. View inventory" << std::endl;
-    std::cout << "5. Equip monsters with items" << std::endl;
-    std::cout << "6. Heal monsters" << std::endl;
-    std::cout << "7. Show your stats" << std::endl;
-    std::cout << "8. Quit to main menu" << std::endl;
+        int choiceInGameMenu = 0;
 
-    std::cin >> choiceInGameMenu;
+        std::cout << std::endl;
+        std::cout << "===== GAME MENU =====" << std::endl;
+        std::cout << "1. Fight a monster" << std::endl;
+        std::cout << "2. Enter a cave (3 or more monsters is recommended for caves)" << std::endl;
+        std::cout << "3. View your fighters" << std::endl;
+        std::cout << "4. View inventory" << std::endl;
+        std::cout << "5. Equip monsters with items" << std::endl;
+        std::cout << "6. Heal monsters" << std::endl;
+        std::cout << "7. Show your stats" << std::endl;
+        std::cout << "8. Quit to main menu" << std::endl;
 
-    if (choiceInGameMenu == 1) {
-        fightMonster();
-    }
-    else if (choiceInGameMenu == 2) {
-        enterCave();
-    }
-    else if (choiceInGameMenu == 3) {
-        viewFighters();
-    }
-    else if (choiceInGameMenu == 4) {
-        viewInventory();
-    }
-    else if (choiceInGameMenu == 5){
-        giveItemToMonster();
-    }
-    else if (choiceInGameMenu == 6) {
-        healParty();
-    }
-    else if (choiceInGameMenu == 7) {
-        Database db;
+        std::cin >> choiceInGameMenu;
 
-        db.open();
-        db.printStatistics();
-        db.close();
-    }
+        if (choiceInGameMenu == 1) {
+            fightMonster();
+        }
+        else if (choiceInGameMenu == 2) {
+            enterCave();
+        }
+        else if (choiceInGameMenu == 3) {
+            viewFighters();
+        }
+        else if (choiceInGameMenu == 4) {
+            viewInventory();
+        }
+        else if (choiceInGameMenu == 5){
+            giveItemToMonster();
+        }
+        else if (choiceInGameMenu == 6) {
+            healParty();
+        }
+        else if (choiceInGameMenu == 7) {
+            Database db;
+
+            db.open();
+            db.printStatistics();
+            db.close();
+        }
 
     if (!(std::cin >> choiceInGameMenu)) {
         std::cout << "Invalid choice." << std::endl;
@@ -100,20 +102,20 @@ void Menu::inGameMenu() {
         std::cin.clear();
         std::cin.ignore(10000, '\n');
 
-        inGameMenu();
-        return;
+        continue;
     }
 
-    else if (choiceInGameMenu == 8) {
-        Database db;
+        else if (choiceInGameMenu == 8) {
+            Database db;
 
-        db.open();
+            db.open();
 
-        db.savePlayer(player);
+            db.savePlayer(player);
 
-        db.close();
+            db.close();
 
-        mainMenu();
+            return;
+        }
     }
 }
 
@@ -183,7 +185,6 @@ void Menu::fightMonster() {
         std::cin.clear();
         std::cin.ignore(10000, '\n');
 
-        inGameMenu();
         return;
     }
 
@@ -271,9 +272,7 @@ void Menu::fightMonster() {
         }
     }
 
-    inGameMenu();
-
-
+    return;
 }
 
 void Menu::viewFighters() {
@@ -332,7 +331,11 @@ void Menu::viewFighters() {
     int choice;
     std::cin >> choice;
 
-    inGameMenu();
+    if (!(std::cin >> choice)) {
+        std::cin.clear();
+        std::cin.ignore(10000, '\n');
+    }
+    return;
 }
 
 void Menu::viewInventory() {
@@ -355,7 +358,7 @@ void Menu::viewInventory() {
     int choice;
     std::cin >> choice;
 
-    inGameMenu();
+
 }
 
 
@@ -370,7 +373,7 @@ void Menu::healParty() {
     }
 
     std::cout << "Your party has been fully healed!" << std::endl;
-    inGameMenu();
+    return;
 
 }
 
@@ -378,8 +381,6 @@ void Menu::giveItemToMonster() {
 
     if (player.inventory.empty()) {
         std::cout << "You don't have any items!" << std::endl;
-
-        inGameMenu();
         return;
     }
 
@@ -398,8 +399,6 @@ void Menu::giveItemToMonster() {
     if (itemChoice < 0 ||
         itemChoice >= player.inventory.size()) {
         std::cout << "Invalid choice." << std::endl;
-
-        inGameMenu();
         return;
     }
 
@@ -412,6 +411,17 @@ void Menu::giveItemToMonster() {
             std::cout << i + 1 << ". " << player.party[i].name << std::endl;
         }
     }
+    
+    int itemChoice;
+
+    if (!(std::cin >> itemChoice)) {
+        std::cout << "Invalid choice." << std::endl;
+
+        std::cin.clear();
+        std::cin.ignore(10000, '\n');
+
+        return;
+    }
 
     int monsterChoice;
     std::cin >> monsterChoice;
@@ -423,7 +433,6 @@ void Menu::giveItemToMonster() {
         player.party[monsterChoice].name == "") {
         std::cout << "Invalid choice." << std::endl;
 
-        inGameMenu();
         return;
     }
 
@@ -436,8 +445,6 @@ void Menu::giveItemToMonster() {
     player.inventory.erase(
         player.inventory.begin() + itemChoice
     );
-
-    inGameMenu();
 }
 
 int Menu::getAverageMonsterLevel() {
@@ -527,8 +534,6 @@ void Menu::enterCave() {
 
         if (!battle.playerHasLivingMonster()) {
             std::cout << "You were defeated!" << std::endl;
-
-            inGameMenu();
             return;
         }
     }
@@ -539,7 +544,7 @@ void Menu::enterCave() {
     player.inventory.push_back(cave.reward);
 
     std::cout << "You received " << cave.reward.name << "!" << std::endl;
-    inGameMenu();
+    return;
 }
 
 void Menu::loadHero() {
@@ -556,7 +561,7 @@ void Menu::loadHero() {
 
         db.close();
 
-        mainMenu();
+
         return;
     }
 
@@ -570,13 +575,15 @@ void Menu::loadHero() {
     int choice;
     std::cin >> choice;
 
-    if (choice < 1 ||
-        choice > heroes.size()) {
+    int choice;
+
+    if (!(std::cin >> choice)) {
         std::cout << "Invalid choice." << std::endl;
 
-        db.close();
+        std::cin.clear();
+        std::cin.ignore(10000, '\n');
 
-        mainMenu();
+        db.close();
         return;
     }
 
@@ -587,5 +594,5 @@ void Menu::loadHero() {
 
     db.close();
     std::cout << "Loaded " << player.name << "!" << std::endl;
-    inGameMenu();
+    return;
 }

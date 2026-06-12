@@ -3,19 +3,19 @@
 #include <map>
 
 std::map<std::string, ItemData> ITEM_DATA = {
-    {"bomb", {"Bomb", 10, 0, Poisoned}},
+    {"bomb", {"Bomb", 10, 50, Poisoned}},
 
-    {"firebomb", {"Fire Bomb", 5, 35, Stunned}},
+    {"firebomb", {"Fire Bomb", 5, 50, Stunned}},
 
     {"thunderbomb", {"Thunder Bomb", 10, 50, Paralyzed}},
 
-    {"club", {"Club", 20, 0, Poisoned}},
+    {"club", {"Club", 20, 50, Poisoned}},
 
     {"fan", {"Fan", 0, 80, Frozen}},
 
-    {"curse", {"Curse", 0, 20, Cursed}},
+    {"curse", {"Curse", 0, 75, Cursed}},
 
-    {"poison", {"Poison", 0, 20, Poisoned}},
+    {"poison", {"Poison", 0, 50, Poisoned}},
 
     {"legendary spear", {"Legendary spear Mjolnir", 75, 100, Paralyzed}}
 };
