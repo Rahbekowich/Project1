@@ -4,6 +4,7 @@
 #include "items.h"
 #include "status.h"
 #include "caves.h"
+#include "database.h"
 
 #include <iostream>
 
@@ -167,7 +168,15 @@ void Menu::fightMonster() {
                 "club",
                 "fan"
             };
+            Database db;
 
+                db.open();
+
+                db.recordMonsterKill(
+                    battle.enemy.type,
+                    player.name);
+
+                db.close();
             int randomDrop =
                 rand() % possibleDrops.size();
 
