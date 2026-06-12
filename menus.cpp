@@ -9,34 +9,36 @@
 #include <iostream>
 
 void Menu::mainMenu() {
-    int choiceMainMenu = 0;
-    std::cout << "Welcome to the Main Menu!" << std::endl;
-    std::cout << "1. Start new game" << std::endl;
-    std::cout << "2 load game" << std::endl;
-    std::cout << "3. Quit" << std::endl;
+    while (true)
+    {
+        int choice;
 
-    std::cin >> choiceMainMenu;
+        std::cout << "1. Start new game\n";
+        std::cout << "2. Load game\n";
+        std::cout << "3. Quit\n";
 
-    if (choiceMainMenu == 1) {
-        characterChoice();
-    }
-    else if (choiceMainMenu == 2) {
-        loadHero();
-    }
-    else if (choiceMainMenu == 3) {
-        std::cout << "Thanks for playing! Goodbye!" << std::endl;
-        exit(0);
-    }
-    else {
-        std::cout << "Invalid choice." << std::endl;
-        mainMenu();
-    }
+        if (!(std::cin >> choice)) {
+            std::cin.clear();
+            std::cin.ignore(10000, '\n');
 
+            std::cout << "Invalid choice.\n";
+            continue;
+        }
 
+        if (choice == 1) {
+            characterChoice();
+        }
+        else if (choice == 2) {
+            loadHero();
+        }
+        else if (choice == 3) {
+            exit(0);
+        }
+    }
 }
 
 void Menu::characterChoice() {
-    std::cout << "Enter your character's name:" << std::endl;
+    std::cout << "Enter your character's name (no spaces):" << std::endl;
     std::cin >> player.name;
 
     std::cout << "Welcome " << player.name << "!" << std::endl;
@@ -92,6 +94,16 @@ void Menu::inGameMenu() {
         db.close();
     }
 
+    if (!(std::cin >> choiceInGameMenu)) {
+        std::cout << "Invalid choice." << std::endl;
+
+        std::cin.clear();
+        std::cin.ignore(10000, '\n');
+
+        inGameMenu();
+        return;
+    }
+
     else if (choiceInGameMenu == 8) {
         Database db;
 
@@ -102,10 +114,6 @@ void Menu::inGameMenu() {
         db.close();
 
         mainMenu();
-    }
-    else {
-        std::cout << "Invalid choice." << std::endl;
-        inGameMenu();
     }
 }
 
@@ -130,6 +138,8 @@ void Menu::fightMonster() {
     std::cin >> choiceFightMonster;
 
     Battle battle(&player);
+
+
 
     if (choiceFightMonster == 1) {
         battle.startBattle(Monster("slime"));
@@ -167,10 +177,14 @@ void Menu::fightMonster() {
     else if (choiceFightMonster == 12) {
         battle.startBattle(Monster("demonlord"));
     }
-
-    else {
+    if (!(std::cin >> choiceFightMonster)) {
         std::cout << "Invalid choice." << std::endl;
-        fightMonster();
+
+        std::cin.clear();
+        std::cin.ignore(10000, '\n');
+
+        inGameMenu();
+        return;
     }
 
     if (battle.enemy.hp <= 0) {
@@ -473,8 +487,7 @@ Monster Menu::getMonsterByLevel(int level) {
     }
 }
 
-void Menu::enterCave()
-{
+void Menu::enterCave() {
     Cave cave;
 
     int avg = getAverageMonsterLevel();
@@ -492,7 +505,7 @@ void Menu::enterCave()
         "club",
         "fan",
         "curse",
-        "poison"
+        "poison",
         "legendary spear"
     };
 
