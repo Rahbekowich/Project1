@@ -490,7 +490,7 @@ Monster Menu::getMonsterByLevel(int level) {
         case 9:  return Monster("giant");
         case 10: return Monster("dragon");
         case 11: return Monster("demon");
-        case 12: return Monster("demon Lord");
+        case 12: return Monster("demonlord");
 
         default:
             return Monster("slime");

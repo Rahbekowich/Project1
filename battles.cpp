@@ -72,10 +72,12 @@ void Battle::monsterTurn() {
     applyCurseDamage(enemy);
 };
 
-void Battle::switchMonster() {
+void Battle::switchMonster()
+{
     std::cout << "Choose your next monster:" << std::endl;
-    for (int i = 0; i < 4; i++){
-        if (player->party[i].hp > 0){
+
+    for (int i = 0; i < 4; i++) {
+        if (player->party[i].hp > 0) {
             std::cout
                 << i + 1
                 << ". "
@@ -85,8 +87,35 @@ void Battle::switchMonster() {
     }
 
     int choice;
-    std::cin >> choice;
-    activeMonster = choice - 1;
+
+    if (!(std::cin >> choice)) {
+        std::cout << "Invalid choice." << std::endl;
+
+        std::cin.clear();
+        std::cin.ignore(10000, '\n');
+
+        return;
+    }
+
+    choice--;
+
+    if (choice < 0 || choice >= 4) {
+        std::cout << "Invalid choice." << std::endl;
+        return;
+    }
+
+    if (player->party[choice].hp <= 0) {
+        std::cout << "That monster has fainted." << std::endl;
+        return;
+    }
+
+    activeMonster = choice;
+
+    std::cout
+        << "Go "
+        << player->party[activeMonster].name
+        << "!"
+        << std::endl;
 }
 
 bool Battle::playerHasLivingMonster() {
@@ -261,7 +290,7 @@ void Battle::useItem()
 
     Item item =
         player->party[activeMonster].items[choice];
-        
+
     Database db;
         db.open();
 
