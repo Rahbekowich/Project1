@@ -104,8 +104,6 @@ bool Database::open()
         std::cout << "Could not open database!" << std::endl;
         return false;
     }
-
-    std::cout << "Database opened!" << std::endl;
     return true;
 }
 

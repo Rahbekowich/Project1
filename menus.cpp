@@ -593,7 +593,7 @@ void Menu::loadHero() {
         std::cout << "Invalid choice." << std::endl;
 
         db.close();
-        return;
+        inGameMenu();
     }
 
     player = db.loadPlayer(

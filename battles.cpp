@@ -350,7 +350,7 @@ void Battle::applyStatuses(Monster& monster) {
         status.duration--;
     }
 
-    for (int i = monster.statuses.size() - 1; i >= 0; i--)
+    for (int i = static_cast<int>(monster.statuses.size()) - 1; i >= 0; i--)
     {
         if (monster.statuses[i].duration <= 0)
         {
