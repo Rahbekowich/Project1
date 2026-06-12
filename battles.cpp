@@ -2,6 +2,7 @@
 #include "battles.h"
 #include "menus.h"  
 #include "monsters.h"
+#include "database.h"
 
 #include <iostream>
 
@@ -260,6 +261,15 @@ void Battle::useItem()
 
     Item item =
         player->party[activeMonster].items[choice];
+        
+    Database db;
+        db.open();
+
+        db.recordItemUse(
+            item.type,
+            player->name);
+
+        db.close();
 
     enemy.hp -= item.damage;
     if (item.statusChance > 0) {
