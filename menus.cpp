@@ -53,8 +53,7 @@ void Menu::characterChoice() {
 
 
 void Menu::inGameMenu() {
-    while (true){
-
+    while (true) {
         int choiceInGameMenu = 0;
 
         std::cout << std::endl;
@@ -68,7 +67,14 @@ void Menu::inGameMenu() {
         std::cout << "7. Show your stats" << std::endl;
         std::cout << "8. Quit to main menu" << std::endl;
 
-        std::cin >> choiceInGameMenu;
+        if (!(std::cin >> choiceInGameMenu)) {
+            std::cout << "Invalid choice." << std::endl;
+
+            std::cin.clear();
+            std::cin.ignore(10000, '\n');
+
+            continue;
+        }
 
         if (choiceInGameMenu == 1) {
             fightMonster();
@@ -82,7 +88,7 @@ void Menu::inGameMenu() {
         else if (choiceInGameMenu == 4) {
             viewInventory();
         }
-        else if (choiceInGameMenu == 5){
+        else if (choiceInGameMenu == 5) {
             giveItemToMonster();
         }
         else if (choiceInGameMenu == 6) {
@@ -95,23 +101,11 @@ void Menu::inGameMenu() {
             db.printStatistics();
             db.close();
         }
-
-    if (!(std::cin >> choiceInGameMenu)) {
-        std::cout << "Invalid choice." << std::endl;
-
-        std::cin.clear();
-        std::cin.ignore(10000, '\n');
-
-        continue;
-    }
-
         else if (choiceInGameMenu == 8) {
             Database db;
 
             db.open();
-
             db.savePlayer(player);
-
             db.close();
 
             return;
@@ -137,7 +131,14 @@ void Menu::fightMonster() {
     std::cout << "11. Demon" << std::endl;
     std::cout << "12. Demon Lord" << std::endl;
 
-    std::cin >> choiceFightMonster;
+    if (!(std::cin >> choiceFightMonster)) {
+        std::cout << "Invalid choice." << std::endl;
+
+        std::cin.clear();
+        std::cin.ignore(10000, '\n');
+
+        return;
+    }
 
     Battle battle(&player);
 
@@ -179,13 +180,9 @@ void Menu::fightMonster() {
     else if (choiceFightMonster == 12) {
         battle.startBattle(Monster("demonlord"));
     }
-    if (!(std::cin >> choiceFightMonster)) {
-        std::cout << "Invalid choice." << std::endl;
-
-        std::cin.clear();
-        std::cin.ignore(10000, '\n');
-
-        return;
+    else {
+    std::cout << "Invalid choice." << std::endl;
+    return;
     }
 
     if (battle.enemy.hp <= 0) {
@@ -275,22 +272,19 @@ void Menu::fightMonster() {
     return;
 }
 
-void Menu::viewFighters() {
+void Menu::viewFighters()
+{
     std::cout << std::endl;
-    std::cout << "===== YOUR MONSTERS ====="
-    << std::endl;
-
+    std::cout << "===== YOUR MONSTERS =====" << std::endl;
 
     for (int i = 0; i < 4; i++) {
-        if (player.party[i].name == "")
-        {
+        if (player.party[i].name == "") {
             std::cout
                 << i + 1
                 << ". Empty slot"
                 << std::endl;
         }
-        else
-        {
+        else {
             std::cout
                 << i + 1
                 << ". "
@@ -301,20 +295,13 @@ void Menu::viewFighters() {
                 << player.party[i].attack
                 << std::endl;
 
-            if (!player.party[i].items.empty())
-            {
+            if (!player.party[i].items.empty()) {
                 std::cout << "   Items: ";
 
-                for (int j = 0;
-                    j < player.party[i].items.size();
-                    j++)
-                {
-                    std::cout
-                        << player.party[i].items[j].name;
+                for (int j = 0; j < player.party[i].items.size(); j++) {
+                    std::cout << player.party[i].items[j].name;
 
-                    if (j <
-                        player.party[i].items.size() - 1)
-                    {
+                    if (j < player.party[i].items.size() - 1) {
                         std::cout << ", ";
                     }
                 }
@@ -325,17 +312,14 @@ void Menu::viewFighters() {
     }
 
     std::cout << std::endl;
-    std::cout << "Enter 1 to return."
-            << std::endl;
+    std::cout << "Enter 1 to return." << std::endl;
 
     int choice;
-    std::cin >> choice;
 
     if (!(std::cin >> choice)) {
         std::cin.clear();
         std::cin.ignore(10000, '\n');
     }
-    return;
 }
 
 void Menu::viewInventory() {
@@ -346,7 +330,8 @@ void Menu::viewInventory() {
         std::cout << "Inventory is empty." << std::endl;
     }
     else {
-        for (int i = 0; i < player.inventory.size(); i++) {
+        for (int i = 0; i < player.inventory.size(); i++)
+        {
             std::cout
                 << i + 1
                 << ". "
@@ -355,10 +340,15 @@ void Menu::viewInventory() {
         }
     }
 
+    std::cout << std::endl;
+    std::cout << "Enter 1 to return." << std::endl;
+
     int choice;
-    std::cin >> choice;
 
-
+    if (!(std::cin >> choice)) {
+        std::cin.clear();
+        std::cin.ignore(10000, '\n');
+    }
 }
 
 
@@ -377,8 +367,7 @@ void Menu::healParty() {
 
 }
 
-void Menu::giveItemToMonster() {
-
+void Menu::giveItemToMonster(){
     if (player.inventory.empty()) {
         std::cout << "You don't have any items!" << std::endl;
         return;
@@ -388,11 +377,23 @@ void Menu::giveItemToMonster() {
     std::cout << "Choose an item:" << std::endl;
 
     for (int i = 0; i < player.inventory.size(); i++) {
-        std::cout << i + 1 << ". " << player.inventory[i].name << std::endl;
+        std::cout
+            << i + 1
+            << ". "
+            << player.inventory[i].name
+            << std::endl;
     }
 
     int itemChoice;
-    std::cin >> itemChoice;
+
+    if (!(std::cin >> itemChoice)) {
+        std::cout << "Invalid choice." << std::endl;
+
+        std::cin.clear();
+        std::cin.ignore(10000, '\n');
+
+        return;
+    }
 
     itemChoice--;
 
@@ -408,13 +409,17 @@ void Menu::giveItemToMonster() {
     for (int i = 0; i < 4; i++) {
         if (player.party[i].name != "")
         {
-            std::cout << i + 1 << ". " << player.party[i].name << std::endl;
+            std::cout
+                << i + 1
+                << ". "
+                << player.party[i].name
+                << std::endl;
         }
     }
-    
-    int itemChoice;
 
-    if (!(std::cin >> itemChoice)) {
+    int monsterChoice;
+
+    if (!(std::cin >> monsterChoice)) {
         std::cout << "Invalid choice." << std::endl;
 
         std::cin.clear();
@@ -423,29 +428,27 @@ void Menu::giveItemToMonster() {
         return;
     }
 
-    int monsterChoice;
-    std::cin >> monsterChoice;
-
     monsterChoice--;
 
     if (monsterChoice < 0 ||
         monsterChoice >= 4 ||
         player.party[monsterChoice].name == "") {
-        std::cout << "Invalid choice." << std::endl;
-
-        return;
+            std::cout << "Invalid choice." << std::endl;
+            return;
     }
 
     player.party[monsterChoice].items.push_back(
         player.inventory[itemChoice]
     );
 
-    std::cout << player.inventory[itemChoice].name << " was given to " << player.party[monsterChoice].name << std::endl;
+    std::cout
+        << player.inventory[itemChoice].name << " was given to " << player.party[monsterChoice].name << std::endl;
 
     player.inventory.erase(
         player.inventory.begin() + itemChoice
     );
 }
+
 
 int Menu::getAverageMonsterLevel() {
     int totalLevel = 0;
@@ -560,8 +563,6 @@ void Menu::loadHero() {
             << std::endl;
 
         db.close();
-
-
         return;
     }
 
@@ -569,11 +570,12 @@ void Menu::loadHero() {
     std::cout << "===== LOAD HERO =====" << std::endl;
 
     for (int i = 0; i < heroes.size(); i++) {
-        std::cout << i + 1 << ". " << heroes[i] << std::endl;
+        std::cout
+            << i + 1
+            << ". "
+            << heroes[i]
+            << std::endl;
     }
-
-    int choice;
-    std::cin >> choice;
 
     int choice;
 
@@ -587,12 +589,22 @@ void Menu::loadHero() {
         return;
     }
 
-    player =
-        db.loadPlayer(
-            heroes[choice - 1]
-        );
+    if (choice < 1 || choice > heroes.size()) {
+        std::cout << "Invalid choice." << std::endl;
+
+        db.close();
+        return;
+    }
+
+    player = db.loadPlayer(
+        heroes[choice - 1]
+    );
 
     db.close();
-    std::cout << "Loaded " << player.name << "!" << std::endl;
-    return;
+
+    std::cout
+        << "Loaded "
+        << player.name
+        << "!"
+        << std::endl;
 }
