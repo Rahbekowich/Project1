@@ -93,6 +93,14 @@ void Menu::inGameMenu() {
     }
 
     else if (choiceInGameMenu == 8) {
+        Database db;
+
+        db.open();
+
+        db.savePlayer(player);
+
+        db.close();
+
         mainMenu();
     }
     else {
@@ -166,6 +174,15 @@ void Menu::fightMonster() {
     }
 
     if (battle.enemy.hp <= 0) {
+        Database db;
+
+            db.open();
+
+            db.recordMonsterKill(
+                battle.enemy.type,
+                player.name);
+
+                db.close();
         if (rand() % 100 == 0) {
             std::vector<std::string> possibleDrops = {
                 "bomb",
@@ -174,15 +191,7 @@ void Menu::fightMonster() {
                 "club",
                 "fan"
             };
-            Database db;
 
-                db.open();
-
-                db.recordMonsterKill(
-                    battle.enemy.type,
-                    player.name);
-
-                db.close();
             int randomDrop =
                 rand() % possibleDrops.size();
 
