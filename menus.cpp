@@ -12,7 +12,8 @@ void Menu::mainMenu() {
     int choiceMainMenu = 0;
     std::cout << "Welcome to the Main Menu!" << std::endl;
     std::cout << "1. Start new game" << std::endl;
-    std::cout << "2. Quit" << std::endl;
+    std::cout << "2 load game" << std::endl;
+    std::cout << "3. Quit" << std::endl;
 
     std::cin >> choiceMainMenu;
 
@@ -20,6 +21,9 @@ void Menu::mainMenu() {
         characterChoice();
     }
     else if (choiceMainMenu == 2) {
+        loadHero();
+    }
+    else if (choiceMainMenu == 3) {
         std::cout << "Thanks for playing! Goodbye!" << std::endl;
         exit(0);
     }
@@ -43,13 +47,8 @@ void Menu::characterChoice() {
     std::cout << "You start with two Horses!" << std::endl;
 
     inGameMenu();
-    
-
 }
 
-void Menu::starterPokemonChoice() {
-
-}
 
 void Menu::inGameMenu() {
     int choiceInGameMenu = 0;
@@ -166,11 +165,9 @@ void Menu::fightMonster() {
         fightMonster();
     }
 
-    if (battle.enemy.hp <= 0)
-    {
+    if (battle.enemy.hp <= 0) {
         if (rand() % 100 == 0) {
-            std::vector<std::string> possibleDrops =
-            {
+            std::vector<std::string> possibleDrops = {
                 "bomb",
                 "firebomb",
                 "thunderbomb",
@@ -193,11 +190,7 @@ void Menu::fightMonster() {
 
             player.inventory.push_back(reward);
 
-            std::cout
-                << "Lucky! The monster dropped a "
-                << reward.name
-                << "!"
-                << std::endl;
+            std::cout << "Lucky! The monster dropped a " << reward.name << "!" << std::endl;
         }
         char catchChoice;
 
@@ -319,19 +312,15 @@ void Menu::viewFighters() {
     inGameMenu();
 }
 
-void Menu::viewInventory()
-{
+void Menu::viewInventory() {
     std::cout << std::endl;
     std::cout << "===== INVENTORY =====" << std::endl;
 
-    if (player.inventory.empty())
-    {
+    if (player.inventory.empty()) {
         std::cout << "Inventory is empty." << std::endl;
     }
-    else
-    {
-        for (int i = 0; i < player.inventory.size(); i++)
-        {
+    else {
+        for (int i = 0; i < player.inventory.size(); i++) {
             std::cout
                 << i + 1
                 << ". "
@@ -347,10 +336,9 @@ void Menu::viewInventory()
 }
 
 
-void Menu::healParty()
-{
-    for (int i = 0; i < 4; i++)
-    {
+void Menu::healParty() {
+
+    for (int i = 0; i < 4; i++) {
         if (player.party[i].name != "")
         {
             player.party[i] =
@@ -363,10 +351,9 @@ void Menu::healParty()
 
 }
 
-void Menu::giveItemToMonster()
-{
-    if (player.inventory.empty())
-    {
+void Menu::giveItemToMonster() {
+
+    if (player.inventory.empty()) {
         std::cout << "You don't have any items!" << std::endl;
 
         inGameMenu();
@@ -376,13 +363,8 @@ void Menu::giveItemToMonster()
     std::cout << std::endl;
     std::cout << "Choose an item:" << std::endl;
 
-    for (int i = 0; i < player.inventory.size(); i++)
-    {
-        std::cout
-            << i + 1
-            << ". "
-            << player.inventory[i].name
-            << std::endl;
+    for (int i = 0; i < player.inventory.size(); i++) {
+        std::cout << i + 1 << ". " << player.inventory[i].name << std::endl;
     }
 
     int itemChoice;
@@ -391,8 +373,7 @@ void Menu::giveItemToMonster()
     itemChoice--;
 
     if (itemChoice < 0 ||
-        itemChoice >= player.inventory.size())
-    {
+        itemChoice >= player.inventory.size()) {
         std::cout << "Invalid choice." << std::endl;
 
         inGameMenu();
@@ -402,15 +383,10 @@ void Menu::giveItemToMonster()
     std::cout << std::endl;
     std::cout << "Choose a monster:" << std::endl;
 
-    for (int i = 0; i < 4; i++)
-    {
+    for (int i = 0; i < 4; i++) {
         if (player.party[i].name != "")
         {
-            std::cout
-                << i + 1
-                << ". "
-                << player.party[i].name
-                << std::endl;
+            std::cout << i + 1 << ". " << player.party[i].name << std::endl;
         }
     }
 
@@ -421,8 +397,7 @@ void Menu::giveItemToMonster()
 
     if (monsterChoice < 0 ||
         monsterChoice >= 4 ||
-        player.party[monsterChoice].name == "")
-    {
+        player.party[monsterChoice].name == "") {
         std::cout << "Invalid choice." << std::endl;
 
         inGameMenu();
@@ -433,12 +408,7 @@ void Menu::giveItemToMonster()
         player.inventory[itemChoice]
     );
 
-    std::cout
-        << player.inventory[itemChoice].name
-        << " was given to "
-        << player.party[monsterChoice].name
-        << "!"
-        << std::endl;
+    std::cout << player.inventory[itemChoice].name << " was given to " << player.party[monsterChoice].name << std::endl;
 
     player.inventory.erase(
         player.inventory.begin() + itemChoice
@@ -452,8 +422,7 @@ int Menu::getAverageMonsterLevel() {
     int monsterCount = 0;
 
     for (int i = 0; i < 4; i++) {
-        if (player.party[i].name != "")
-        {
+        if (player.party[i].name != "") {
             totalLevel += player.party[i].idNumber;
             monsterCount++;
         }
@@ -467,13 +436,11 @@ int Menu::getAverageMonsterLevel() {
 }
 
 Monster Menu::getMonsterByLevel(int level) {
-    if (level < 1)
-    {
+    if (level < 1) {
         level = 1;
     }
 
-    if (level > 12)
-    {
+    if (level > 12) {
         level = 12;
     }
 
@@ -530,21 +497,14 @@ void Menu::enterCave()
     Battle battle(&player);
 
     for (int i = 0; i < cave.monsters.size(); i++) {
-        std::cout
-            << "Monster "
-            << i + 1
-            << " of "
-            << cave.monsters.size()
-            << std::endl;
+        std::cout << "Monster " << i + 1 << " of " << cave.monsters.size() << std::endl;
 
         battle.startBattle(
             cave.monsters[i]
         );
 
         if (!battle.playerHasLivingMonster()) {
-            std::cout
-                << "You failed the cave!"
-                << std::endl;
+            std::cout << "You were defeated!" << std::endl;
 
             inGameMenu();
             return;
@@ -553,8 +513,57 @@ void Menu::enterCave()
 
     std::cout << std::endl;
     std::cout << "Cave Cleared!" << std::endl;
+
     player.inventory.push_back(cave.reward);
+
     std::cout << "You received " << cave.reward.name << "!" << std::endl;
     inGameMenu();
 }
 
+void Menu::loadHero() {
+    Database db;
+
+    db.open();
+
+    std::vector<std::string> heroes = db.getAllHeroes();
+
+    if (heroes.empty()) {
+        std::cout
+            << "No saved heroes found."
+            << std::endl;
+
+        db.close();
+
+        mainMenu();
+        return;
+    }
+
+    std::cout << std::endl;
+    std::cout << "===== LOAD HERO =====" << std::endl;
+
+    for (int i = 0; i < heroes.size(); i++) {
+        std::cout << i + 1 << ". " << heroes[i] << std::endl;
+    }
+
+    int choice;
+    std::cin >> choice;
+
+    if (choice < 1 ||
+        choice > heroes.size()) {
+        std::cout << "Invalid choice." << std::endl;
+
+        db.close();
+
+        mainMenu();
+        return;
+    }
+
+    player =
+        db.loadPlayer(
+            heroes[choice - 1]
+        );
+
+    db.close();
+    std::cout << "Loaded " << player.name << "!" << std::endl;
+    inGameMenu();
+}

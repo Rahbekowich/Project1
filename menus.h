@@ -8,7 +8,7 @@ class Menu {
 
     void mainMenu();
     void characterChoice();
-    void starterPokemonChoice();
+
 
     void inGameMenu();
     void fightMonster();
@@ -23,4 +23,6 @@ class Menu {
     int getAverageMonsterLevel();
     Monster getMonsterByLevel(int level);
     void enterCave();
+
+    void loadHero();
 };
